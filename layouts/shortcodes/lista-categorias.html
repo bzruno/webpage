@@ -1,0 +1,12 @@
+{{- with site.Taxonomies.categorias }}
+<ul class="categorias">
+  {{- range .Alphabetical }}
+  <li>
+    {{ with .Page.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+    <small>({{ .Count }})</small>
+  </li>
+  {{- end }}
+</ul>
+{{- else }}
+<p>Nenhuma categoria encontrada.</p>
+{{- end }}

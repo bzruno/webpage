@@ -1,0 +1,42 @@
+{{- define "main" }}
+<main>
+  {{- if not .IsHome }}
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    {{- range .Ancestors.Reverse }}
+      {{- if not .IsHome }}
+        / <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{- end }}
+    {{- end }}
+    / <span aria-current="page">{{ .LinkTitle }}</span>
+  </nav>
+  {{- end }}
+
+  <h1>{{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}{{ .LinkTitle }}</h1>
+  {{- .Content }}
+
+  {{- if eq .Kind "taxonomy" }}
+    {{- $taxonomy := .Data.Singular }}
+    <ul class="{{ if eq $taxonomy "categoria" }}categorias{{ else if eq $taxonomy "serie" }}series{{ else }}artigos{{ end }}">
+      {{- range .Data.Terms.Alphabetical }}
+      <li>
+        {{ with .Page.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+        <small>({{ .Count }})</small>
+      </li>
+      {{- end }}
+    </ul>
+  {{- else }}
+    {{- $pages := .Pages.ByDate.Reverse }}
+    <ul class="artigos">
+      {{- range $pages }}
+      <li>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (i18n "date_format") }}</time>
+        <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      </li>
+      {{- else }}
+      <li>Nenhum artigo encontrado.</li>
+      {{- end }}
+    </ul>
+  {{- end }}
+</main>
+{{- end }}

@@ -1,0 +1,12 @@
+{{- with site.Taxonomies.series }}
+<ul class="series">
+  {{- range .Alphabetical }}
+  <li>
+    <a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+    <small>({{ .Count }})</small>
+  </li>
+  {{- end }}
+</ul>
+{{- else }}
+<p>Nenhuma série encontrada.</p>
+{{- end }}

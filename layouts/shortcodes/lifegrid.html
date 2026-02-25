@@ -1,0 +1,61 @@
+{{- $birthDate := time "1997-05-01" }}
+{{- $now       := now }}
+
+{{- $marcos := slice
+  (dict "data" (time "2015-05-01") "nome" "Maioridade"            "cor" "#7aa2f7")
+  (dict "data" (time "2019-05-15") "nome" "Primeiro emprego"      "cor" "#9ece6a")
+  (dict "data" (time "2020-03-11") "nome" "Início pandemia COVID" "cor" "#f7768e")
+  (dict "data" (time "2022-11-21") "nome" "Início na academia" "cor" "#e0af68")
+}}
+
+{{- $totalSecs  := sub (time (printf "%d-05-01" (add $birthDate.Year 90))).Unix $birthDate.Unix }}
+{{- $totalWeeks := div $totalSecs 604800 }}
+{{- $livedSecs  := sub $now.Unix $birthDate.Unix }}
+{{- $livedWeeks := div $livedSecs 604800 }}
+{{- if gt $livedWeeks $totalWeeks }}{{- $livedWeeks = $totalWeeks }}{{- end }}
+
+{{- $livedDays := div $livedSecs 86400 }}
+{{- $idadeAnos := div (mul (float $livedDays) 10) 3652 }}
+{{- $rows      := div (add $totalWeeks 51) 52 }}
+
+{{- $marcosJS     := slice }}
+{{- $marcosLegend := slice }}
+{{- range $marcos }}
+  {{- $semana := div (sub .data.Unix $birthDate.Unix) 604800 }}
+  {{- if and (ge $semana 0) (lt $semana $totalWeeks) }}
+    {{- $marcosJS     = $marcosJS     | append (dict "semana" $semana "cor" .cor) }}
+    {{- $marcosLegend = $marcosLegend | append (dict "nome" .nome "cor" .cor) }}
+  {{- end }}
+{{- end }}
+
+<div class="lifegrid-container">
+  <canvas id="lifeGrid"></canvas>
+  <div class="lifegrid-caption">
+    <div class="lifegrid-stats">
+      Idade: {{ printf "%.1f" $idadeAnos }} anos |
+      Semanas vividas: {{ $livedWeeks }} |
+      Semanas restantes: {{ sub $totalWeeks $livedWeeks }}<br>
+      Última atualização: {{ $now.Format "02/01/2006 às 15:04" }}
+    </div>
+    <div class="lifegrid-legends">
+      {{- range $marcosLegend }}
+      <span class="legend-item">
+        <span class="legend-color" style="background-color:{{ .cor }};"></span>
+        {{ .nome }}
+      </span>
+      {{- end }}
+    </div>
+  </div>
+</div>
+
+{{- $js := resources.Get "js/lifegrid.js" | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
+<script>
+  initLifeGrid({
+    totalWeeks:      {{ $totalWeeks }},
+    livedWeeks:      {{ $livedWeeks }},
+    weeksPerRow:     52,
+    rows:            {{ $rows }},
+    marcosEspeciais: {{ $marcosJS | jsonify | safeJS }}
+  });
+</script>

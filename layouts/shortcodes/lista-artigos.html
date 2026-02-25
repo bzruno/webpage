@@ -1,0 +1,16 @@
+{{- $limit := .Get "limit" | default 10 }}
+{{- $section := .Get "section" | default "artigos" }}
+{{- $artigos := (where site.RegularPages "Section" $section).ByDate.Reverse | first $limit }}
+
+{{- with $artigos }}
+<ul class="artigos">
+  {{- range . }}
+  <li>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (i18n "date_format") }}</time>
+    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+  </li>
+  {{- end }}
+</ul>
+{{- else }}
+<p>Nenhum artigo encontrado.</p>
+{{- end }}
