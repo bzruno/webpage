@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{ site.Language.LanguageCode }}">
+<html lang="{{ site.Language.Lang }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
   <meta name="author" content="{{ site.Params.author }}">
+
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
@@ -14,20 +16,24 @@
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ site.Title }}">
 
-  {{ with .OutputFormats.Get "RSS" -}}
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{ range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" title="%s" href="%s">` .Rel .MediaType.Type site.Title .Permalink | safeHTML }}
   {{- end }}
 
   {{ with resources.Get "css/style.css" | minify | fingerprint -}}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{- end }}
+
+  {{- block "head-extra" . }}{{- end }}
 </head>
 <body>
   {{- with site.Menus.main }}
   <header>
     <nav class="main-menu">
       {{- range . }}
-      <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} class="active"{{ end }}>{{ .Name }}</a>
+      <a href="{{ .URL }}"{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (and (ne .URL "/") (hasPrefix $.RelPermalink .URL)) }} class="active"{{ end }}>{{ .Name }}</a>
       {{- end }}
     </nav>
   </header>

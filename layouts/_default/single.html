@@ -15,47 +15,46 @@
     {{- with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{- end }}
     <div class="meta">
       <div class="taxonomy-date">
-        <strong>Data de publicação: </strong>
-        <time datetime="{{ .Date.Format "2006-01-02" }}">
-          {{ .Date | time.Format (i18n "date_format") }}
-        </time>
+        {{ partial "date.html" . }}
       </div>
 
       {{- with .GetTerms "categorias" }}
         <div class="taxonomy-categories">
-          <strong>Categorias: </strong>
+          Categorias:
           {{- range $i, $term := . }}
-            {{- if $i }}, {{ end }}{{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+            {{- if $i }}, {{ end }}
+            {{ with $term.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
           {{- end }}
         </div>
       {{- end }}
 
       {{- with .GetTerms "tags" }}
         <div class="taxonomy-tags">
-          <strong>Tags: </strong>
+          Tags:
           {{- range $i, $term := . }}
-            {{- if $i }}, {{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+            {{- if $i }}, {{ end }}
+            <a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
           {{- end }}
         </div>
       {{- end }}
 
       {{- with .GetTerms "series" }}
         <div class="taxonomy-series">
-          <strong>Série: </strong>
+          Série:
           {{- range $i, $term := . }}
-            {{- if $i }}, {{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-            {{- with $.Params.part }} (Parte {{ . }}){{ end }}
+            {{- if $i }}, {{ end }}
+            <a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>{{ with $.Params.part }} (Parte {{ . }}){{ end }}
           {{- end }}
         </div>
       {{- end }}
     </div>
   </header>
 
-  {{- with .TableOfContents }}
+  {{- if and .Params.toc (gt (len .TableOfContents) 50) }}
     <aside class="toc">
       <h2>Sumário</h2>
       <nav id="TableOfContents">
-        {{ . }}
+        {{ .TableOfContents }}
       </nav>
     </aside>
   {{- end }}
@@ -65,15 +64,17 @@
   </div>
 
   {{- range .GetTerms "series" }}
-    {{- $pages := where .Pages "Permalink" "!=" $.Permalink }}
-    {{- if $pages }}
+    {{- if gt (len .Pages) 1 }}
       <aside class="series-nav">
         <h3>Mais de {{ .LinkTitle }}</h3>
         <ul>
-          {{- range $pages }}
-          <li{{ if eq . $.Page }} class="active"{{ end }}>
-            <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-            {{ with .Params.part }}(Parte {{ . }}){{ end }}
+          {{- range .Pages }}
+          <li{{ if eq .Permalink $.Permalink }} class="active"{{ end }}>
+            {{- if eq .Permalink $.Permalink }}
+              <span>{{ .LinkTitle }}{{ with .Params.part }} (Parte {{ . }}){{ end }}</span>
+            {{- else }}
+              <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ with .Params.part }} (Parte {{ . }}){{ end }}
+            {{- end }}
           </li>
           {{- end }}
         </ul>
@@ -84,7 +85,11 @@
   <footer class="post-footer">
     <nav>
       <a href="/">&larr; Home</a>
-      <a href="{{ (site.GetPage "/artigos").RelPermalink }}">Mais Artigos &rarr;</a>
+      {{- with .CurrentSection }}
+        {{- if not .IsHome }}
+          <a href="{{ .RelPermalink }}">Mais {{ .LinkTitle | lower }} &rarr;</a>
+        {{- end }}
+      {{- end }}
     </nav>
   </footer>
 

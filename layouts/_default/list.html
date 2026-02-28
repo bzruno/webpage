@@ -16,25 +16,24 @@
   {{- .Content }}
 
   {{- if eq .Kind "taxonomy" }}
-    {{- $taxonomy := .Data.Singular }}
-    <ul class="{{ if eq $taxonomy "categoria" }}categorias{{ else if eq $taxonomy "serie" }}series{{ else }}artigos{{ end }}">
-      {{- range .Data.Terms.Alphabetical }}
+    <ul class="{{ .Data.Plural }}">
+      {{- range .Pages }}
       <li>
-        {{ with .Page.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
-        <small>({{ .Count }})</small>
+        {{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+        <small>({{ len .Pages }})</small>
       </li>
       {{- end }}
     </ul>
   {{- else }}
     {{- $pages := .Pages.ByDate.Reverse }}
-    <ul class="artigos">
+    <ul class="ensaios">
       {{- range $pages }}
       <li>
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (i18n "date_format") }}</time>
+        {{- partial "date.html" . }}
         <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
       </li>
       {{- else }}
-      <li>Nenhum artigo encontrado.</li>
+      <li>Nenhum ensaio encontrado.</li>
       {{- end }}
     </ul>
   {{- end }}

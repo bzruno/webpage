@@ -4,11 +4,13 @@ subtitle: ""
 date: {{ .Date }}
 draft: false
 categorias: []
-series: []
+tags: []
+serie: []
+part:
 toc: true
 ---
 
-Resumo do artigo aqui.
+Resumo do ensaio aqui.
 
 <!--more-->
 
@@ -18,4 +20,4 @@ Conteúdo aqui.
 
 ## Conclusão
 
-Conclusão do artigo.
+Conclusão do ensaio.

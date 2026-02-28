@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dieta on Blog do Bruno</title>
+    <title>Dieta on Bruno</title>
     <link>http://localhost:1313/categorias/dieta/</link>
-    <description>Recent content in Dieta on Blog do Bruno</description>
+    <description>Recent content in Dieta on Bruno</description>
     <generator>Hugo</generator>
     <language>pt-br</language>
     <lastBuildDate>Fri, 09 Feb 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categorias/dieta/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Guia Completo de Markdown</title>
-      <link>http://localhost:1313/artigos/guia-completo-de-markdown/</link>
+      <link>http://localhost:1313/ensaios/guia-completo-de-markdown/</link>
       <pubDate>Fri, 09 Feb 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/artigos/guia-completo-de-markdown/</guid>
-      <description>&lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;&#xA;&lt;p&gt;PureText is a tiny tray utility that removes all text formatting from your clipboard and optionally pastes the resulting pure text to the active window with a single hotkey.&lt;/p&gt;&#xA;&lt;h2 id=&#34;web-page&#34;&gt;Web Page&lt;/h2&gt;&#xA;&lt;p&gt;Have you ever copied some text from a web page or Word document, and wanted to paste it as plain text into another application without getting all the formatting from the original source? PureText makes this simple. Just copy/cut whatever you want to the clipboard, click on the PureText tray icon, and then paste to any application. Better yet, you can configure a PureText Hotkey to convert and paste the text for you. The pasted text will be pure and free from all formatting.&lt;/p&gt;</description>
+      <guid>http://localhost:1313/ensaios/guia-completo-de-markdown/</guid>
+      <description>&lt;h1 id=&#34;título-h1&#34;&gt;Título H1&lt;/h1&gt;&#xA;&lt;h2 id=&#34;título-h2&#34;&gt;Título H2&lt;/h2&gt;&#xA;&lt;h3 id=&#34;título-h3&#34;&gt;Título H3&lt;/h3&gt;&#xA;&lt;h4 id=&#34;título-h4&#34;&gt;Título H4&lt;/h4&gt;&#xA;&lt;h5 id=&#34;título-h5&#34;&gt;Título H5&lt;/h5&gt;&#xA;&lt;h6 id=&#34;título-h6&#34;&gt;Título H6&lt;/h6&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;parágrafos-e-quebras-de-linha&#34;&gt;Parágrafos e Quebras de Linha&lt;/h2&gt;&#xA;&lt;p&gt;Este é um parágrafo normal com texto corrido. Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;&#xA;&lt;p&gt;Este é outro parágrafo. Duas linhas em branco separam parágrafos.&lt;/p&gt;&#xA;&lt;p&gt;Esta linha tem uma quebra forçada no final (dois espaços + Enter).&lt;br&gt;&#xA;Esta é a linha seguinte.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;ênfase&#34;&gt;Ênfase&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;itálico com asterisco&lt;/em&gt;&lt;br&gt;&#xA;&lt;em&gt;itálico com underline&lt;/em&gt;&lt;br&gt;&#xA;&lt;strong&gt;negrito com asterisco&lt;/strong&gt;&lt;br&gt;&#xA;&lt;strong&gt;negrito com underline&lt;/strong&gt;&lt;br&gt;&#xA;&lt;em&gt;&lt;strong&gt;negrito e itálico&lt;/strong&gt;&lt;/em&gt;&lt;br&gt;&#xA;&lt;del&gt;texto tachado&lt;/del&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

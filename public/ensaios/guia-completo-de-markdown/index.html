@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guia Completo de Markdown | Bruno</title>
+  <meta name="description" content="Minha página">
+  <meta name="author" content="Bruno">
+
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+  
+  <meta property="og:title" content="Guia Completo de Markdown">
+  <meta property="og:description" content="Minha página">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://localhost:1313/ensaios/guia-completo-de-markdown/">
+  <meta property="og:site_name" content="Bruno">
+
+  <link rel="canonical" href="http://localhost:1313/ensaios/guia-completo-de-markdown/">
+
+  
+
+  <link rel="stylesheet" href="/css/style.min.e4ce6a3b059f16db2640dc911cf4298fd0c118ea8a845f5f23da4400f779dd7e.css" integrity="sha256-5M5qOwWfFtsmQNyRHPQpj9DBGOqKhF9fI9pEAPd53X4=" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <nav class="main-menu">
+      <a href="/">Home</a>
+      <a href="/ensaios/" class="active">Ensaios</a>
+      <a href="/categorias/">Categorias</a>
+      <a href="/series/">Séries</a>
+    </nav>
+  </header>
+<article>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+        / <a href="/ensaios/">Ensaios</a>
+    / <span aria-current="page">Guia Completo de Markdown</span>
+  </nav>
+
+  <header>
+    <h1>Guia Completo de Markdown</h1><p class="subtitle">Esto</p>
+    <div class="meta">
+      <div class="taxonomy-date">
+        <time datetime="2024-02-09">09-Fev-2024</time>
+      </div>
+        <div class="taxonomy-categories">
+          Categorias:
+            🥩&nbsp;<a href="/categorias/dieta/">Dieta</a>, 
+            ☦️&nbsp;<a href="/categorias/teologia/">Teologia</a>
+        </div>
+        <div class="taxonomy-series">
+          Série:
+            <a href="/series/grana/">Grana</a> (Parte 1)
+        </div>
+    </div>
+  </header>
+    <aside class="toc">
+      <h2>Sumário</h2>
+      <nav id="TableOfContents">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#título-h2">Título H2</a>
+      <ol>
+        <li><a href="#título-h3">Título H3</a>
+          <ol>
+            <li><a href="#título-h4">Título H4</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#parágrafos-e-quebras-de-linha">Parágrafos e Quebras de Linha</a></li>
+    <li><a href="#ênfase">Ênfase</a></li>
+    <li><a href="#blockquotes">Blockquotes</a></li>
+    <li><a href="#listas">Listas</a>
+      <ol>
+        <li><a href="#lista-não-ordenada">Lista não ordenada</a></li>
+        <li><a href="#lista-ordenada">Lista ordenada</a></li>
+        <li><a href="#lista-de-tarefas-task-list">Lista de tarefas (Task List)</a></li>
+      </ol>
+    </li>
+    <li><a href="#código">Código</a>
+      <ol>
+        <li><a href="#código-inline">Código inline</a></li>
+        <li><a href="#bloco-de-código-sem-linguagem">Bloco de código sem linguagem</a></li>
+        <li><a href="#bloco-de-código-com-linguagem">Bloco de código com linguagem</a></li>
+      </ol>
+    </li>
+    <li><a href="#links">Links</a>
+      <ol>
+        <li><a href="#links-de-referência">Links de referência</a></li>
+      </ol>
+    </li>
+    <li><a href="#imagens">Imagens</a>
+      <ol>
+        <li><a href="#imagem-com-link">Imagem com link</a></li>
+      </ol>
+    </li>
+    <li><a href="#tabelas">Tabelas</a>
+      <ol>
+        <li><a href="#tabela-básica">Tabela básica</a></li>
+        <li><a href="#tabela-com-alinhamento">Tabela com alinhamento</a></li>
+        <li><a href="#tabela-com-formatação-nas-células">Tabela com formatação nas células</a></li>
+      </ol>
+    </li>
+    <li><a href="#régua-horizontal">Régua Horizontal</a></li>
+    <li><a href="#html-inline-requer-unsafe--true-no-goldmark">HTML Inline (requer <code>unsafe = true</code> no Goldmark)</a></li>
+    <li><a href="#escape-de-caracteres">Escape de Caracteres</a></li>
+    <li><a href="#notas-de-rodapé-footnotes">Notas de Rodapé (Footnotes)</a></li>
+    <li><a href="#definições-definition-lists">Definições (Definition Lists)</a></li>
+    <li><a href="#abreviações">Abreviações</a></li>
+    <li><a href="#âncoras-e-ids">Âncoras e IDs</a>
+      <ol>
+        <li><a href="#meu-id">Seção com ID personalizado</a></li>
+      </ol>
+    </li>
+    <li><a href="#texto-literal-e-espaços">Texto Literal e Espaços</a></li>
+    <li><a href="#listas-com-blocos-internos">Listas com Blocos Internos</a></li>
+    <li><a href="#combinações-e-edge-cases">Combinações e Edge Cases</a></li>
+  </ol>
+</nav>
+      </nav>
+    </aside>
+
+  <div class="content">
+    <h1 id="título-h1">Título H1</h1>
+<h2 id="título-h2">Título H2</h2>
+<h3 id="título-h3">Título H3</h3>
+<h4 id="título-h4">Título H4</h4>
+<h5 id="título-h5">Título H5</h5>
+<h6 id="título-h6">Título H6</h6>
+<hr>
+<h2 id="parágrafos-e-quebras-de-linha">Parágrafos e Quebras de Linha</h2>
+<p>Este é um parágrafo normal com texto corrido. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<p>Este é outro parágrafo. Duas linhas em branco separam parágrafos.</p>
+<p>Esta linha tem uma quebra forçada no final (dois espaços + Enter).<br>
+Esta é a linha seguinte.</p>
+<hr>
+<h2 id="ênfase">Ênfase</h2>
+<p><em>itálico com asterisco</em><br>
+<em>itálico com underline</em><br>
+<strong>negrito com asterisco</strong><br>
+<strong>negrito com underline</strong><br>
+<em><strong>negrito e itálico</strong></em><br>
+<del>texto tachado</del></p>
+<hr>
+<h2 id="blockquotes">Blockquotes</h2>
+<blockquote>
+<p>Isto é uma citação simples.</p>
+</blockquote>
+<blockquote>
+<p>Isto é uma citação com múltiplas linhas.
+Segunda linha da citação.</p>
+</blockquote>
+<blockquote>
+<p>Citação aninhada:</p>
+<blockquote>
+<p>Nível 2</p>
+<blockquote>
+<p>Nível 3</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Citação com <strong>formatação</strong> dentro.</p>
+</blockquote>
+<hr>
+<h2 id="listas">Listas</h2>
+<h3 id="lista-não-ordenada">Lista não ordenada</h3>
+<ul>
+<li>Item 1</li>
+<li>Item 2
+<ul>
+<li>Sub-item 2.1</li>
+<li>Sub-item 2.2
+<ul>
+<li>Sub-item 2.2.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Item 3</li>
+</ul>
+<ul>
+<li>Também funciona com asterisco</li>
+<li>Item B</li>
+</ul>
+<ul>
+<li>E com sinal de mais</li>
+<li>Item X</li>
+</ul>
+<h3 id="lista-ordenada">Lista ordenada</h3>
+<ol>
+<li>Primeiro</li>
+<li>Segundo</li>
+<li>Terceiro
+<ol>
+<li>Sub-item 3.1</li>
+<li>Sub-item 3.2</li>
+</ol>
+</li>
+<li>Quarto</li>
+</ol>
+<h3 id="lista-de-tarefas-task-list">Lista de tarefas (Task List)</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Tarefa concluída</li>
+<li><input disabled="" type="checkbox"> Tarefa pendente</li>
+<li><input checked="" disabled="" type="checkbox"> Outra tarefa concluída</li>
+<li><input disabled="" type="checkbox"> Mais uma pendente</li>
+</ul>
+<hr>
+<h2 id="código">Código</h2>
+<h3 id="código-inline">Código inline</h3>
+<p>Use o comando <code>git status</code> para verificar o repositório.</p>
+<p>Também funciona com <code>variáveis</code>, <code>funções()</code> e <code>{{ templates }}</code>.</p>
+<h3 id="bloco-de-código-sem-linguagem">Bloco de código sem linguagem</h3>
+<pre tabindex="0"><code>Bloco de código simples
+sem highlight
+</code></pre><h3 id="bloco-de-código-com-linguagem">Bloco de código com linguagem</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt-br&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">title</span>&gt;Exemplo&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">h1</span>&gt;Olá, Mundo!&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">body</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">font-family</span>: <span style="color:#66d9ef">sans-serif</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f0f0f0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#333</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">saudacao</span>(<span style="color:#a6e22e">nome</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#e6db74">`Olá, </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">nome</span><span style="color:#e6db74">}</span><span style="color:#e6db74">!`</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">saudacao</span>(<span style="color:#e6db74">&#34;Mundo&#34;</span>));
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fibonacci</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> n
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> fibonacci(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> fibonacci(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(fibonacci(<span style="color:#ae81ff">10</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Olá, Mundo!&#34;</span>
+</span></span><span style="display:flex;"><span>ls -la
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">markup</span>]
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">goldmark</span>]
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">goldmark</span>.<span style="color:#a6e22e">renderer</span>]
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">unsafe</span> = <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;nome&#34;</span>: <span style="color:#e6db74">&#34;Claude&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;versao&#34;</span>: <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ativo&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;tags&#34;</span>: [<span style="color:#e6db74">&#34;ia&#34;</span>, <span style="color:#e6db74">&#34;assistente&#34;</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h2 id="links">Links</h2>
+<p><a href="https://example.com">Link simples</a></p>
+<p><a href="https://example.com" title="Título ao passar o mouse">Link com título</a></p>
+<p><a href="/sobre">Link relativo</a></p>
+<p>Link automático: <a href="https://example.com">https://example.com</a></p>
+<p>Email automático: <a href="mailto:email@exemplo.com">email@exemplo.com</a></p>
+<h3 id="links-de-referência">Links de referência</h3>
+<p>Este é um <a href="https://example.com" title="Referência 1">link de referência</a> e este é <a href="https://example.com/outro" title="Referência 2">outro</a>.</p>
+<hr>
+<h2 id="imagens">Imagens</h2>
+<p><img src="https://via.placeholder.com/400x200" alt="Texto alternativo" title="Título da imagem"></p>
+<p><img src="https://via.placeholder.com/200x100" alt="Imagem de referência" title="Imagem via referência"></p>
+<h3 id="imagem-com-link">Imagem com link</h3>
+<p><a href="https://example.com"><img src="https://via.placeholder.com/300x150" alt="Imagem clicável"></a></p>
+<hr>
+<h2 id="tabelas">Tabelas</h2>
+<h3 id="tabela-básica">Tabela básica</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Coluna 1</th>
+          <th>Coluna 2</th>
+          <th>Coluna 3</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Dado 1</td>
+          <td>Dado 2</td>
+          <td>Dado 3</td>
+      </tr>
+      <tr>
+          <td>Dado 4</td>
+          <td>Dado 5</td>
+          <td>Dado 6</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="tabela-com-alinhamento">Tabela com alinhamento</h3>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Esquerda</th>
+          <th style="text-align: center">Centro</th>
+          <th style="text-align: right">Direita</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">texto</td>
+          <td style="text-align: center">texto</td>
+          <td style="text-align: right">texto</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1</td>
+          <td style="text-align: center">2</td>
+          <td style="text-align: right">3</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">longo</td>
+          <td style="text-align: center">médio</td>
+          <td style="text-align: right">curto</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="tabela-com-formatação-nas-células">Tabela com formatação nas células</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Status</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Alpha</strong></td>
+          <td><em>Primeira versão</em></td>
+          <td><del>inativo</del></td>
+      </tr>
+      <tr>
+          <td><strong>Beta</strong></td>
+          <td><code>versao_beta()</code></td>
+          <td><strong>ativo</strong></td>
+      </tr>
+      <tr>
+          <td><strong>Gamma</strong></td>
+          <td><a href="https://example.com">Link</a></td>
+          <td><strong>ativo</strong></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="régua-horizontal">Régua Horizontal</h2>
+<p>Três formas diferentes:</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<h2 id="html-inline-requer-unsafe--true-no-goldmark">HTML Inline (requer <code>unsafe = true</code> no Goldmark)</h2>
+<p>Parágrafo em HTML puro.</p>
+<p><strong>Negrito via HTML</strong></p>
+<p><mark>Texto destacado (highlight)</mark></p>
+<p><kbd>Ctrl</kbd> + <kbd>C</kbd></p>
+<p><sup>Sobrescrito</sup> e <sub>subscrito</sub></p>
+<details>
+  <summary>Clique para expandir</summary>
+  Conteúdo oculto revelado ao clicar!
+</details>
+<br>
+<hr>
+<h2 id="escape-de-caracteres">Escape de Caracteres</h2>
+<p>*não é itálico*<br>
+**não é negrito**<br>
+# não é título<br>
+[não é link]<br>
+`não é código`<br>
+&gt; não é blockquote</p>
+<hr>
+<h2 id="notas-de-rodapé-footnotes">Notas de Rodapé (Footnotes)</h2>
+<p>Este texto tem uma nota de rodapé<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> e outra aqui<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<hr>
+<h2 id="definições-definition-lists">Definições (Definition Lists)</h2>
+<dl>
+<dt>Termo 1</dt>
+<dd>Definição do termo 1.</dd>
+<dt>Termo 2</dt>
+<dd>Primeira definição do termo 2.</dd>
+<dd>Segunda definição do termo 2.</dd>
+</dl>
+<hr>
+<h2 id="abreviações">Abreviações</h2>
+<p>*[HTML]: HyperText Markup Language
+*[CSS]: Cascading Style Sheets</p>
+<p>HTML e CSS são tecnologias fundamentais da web. (passe o mouse sobre as siglas)</p>
+<hr>
+<h2 id="âncoras-e-ids">Âncoras e IDs</h2>
+<h3 id="meu-id">Seção com ID personalizado</h3>
+<p>Link para a seção: <a href="#meu-id">Ir para seção</a></p>
+<hr>
+<h2 id="texto-literal-e-espaços">Texto Literal e Espaços</h2>
+<p>Texto com    múltiplos espaços (colapsados no HTML).</p>
+<pre><code>Texto com 4 espaços de indentação = bloco de código (método alternativo)
+Segunda linha do bloco
+</code></pre>
+<hr>
+<h2 id="listas-com-blocos-internos">Listas com Blocos Internos</h2>
+<ul>
+<li>
+<p>Item com parágrafo interno.</p>
+<p>Este parágrafo pertence ao item da lista acima.</p>
+</li>
+<li>
+<p>Item com código interno:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;dentro da lista&#34;</span>)
+</span></span></code></pre></div></li>
+<li>
+<p>Item com citação:</p>
+<blockquote>
+<p>Citação dentro de uma lista.</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="combinações-e-edge-cases">Combinações e Edge Cases</h2>
+<blockquote>
+<p><strong>Citação em negrito</strong> com <code>código inline</code> e <a href="https://example.com">link</a>.</p>
+</blockquote>
+<ul>
+<li>Lista com <em><strong>negrito e itálico</strong></em> e <del>tachado</del> juntos.</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Col 1</th>
+          <th>Col 2</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>código</code></td>
+          <td><strong>negrito</strong></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<p><em>Fim do arquivo de teste — 100% das funcionalidades CommonMark + extensões Goldmark.</em></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Esta é a nota de rodapé simples.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Esta é uma nota de rodapé mais longa.
+Pode ter múltiplas linhas com indentação.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <nav>
+      <a href="/">&larr; Home</a>
+          <a href="/ensaios/">Mais ensaios &rarr;</a>
+    </nav>
+  </footer>
+
+</article>
+
+  <footer class="site-footer">
+    <p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+  </footer>
+
+</body>
+</html>

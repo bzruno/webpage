@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bem vindo à minha página on Bruno</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content in Bem vindo à minha página on Bruno</description>
+    <title>Grana on Bruno</title>
+    <link>http://localhost:1313/series/grana/</link>
+    <description>Recent content in Grana on Bruno</description>
     <generator>Hugo</generator>
     <language>pt-br</language>
     <lastBuildDate>Fri, 09 Feb 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/series/grana/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Guia Completo de Markdown</title>
       <link>http://localhost:1313/ensaios/guia-completo-de-markdown/</link>

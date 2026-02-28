@@ -15,7 +15,7 @@
 {{- if gt $livedWeeks $totalWeeks }}{{- $livedWeeks = $totalWeeks }}{{- end }}
 
 {{- $livedDays := div $livedSecs 86400 }}
-{{- $idadeAnos := div (mul (float $livedDays) 10) 3652 }}
+{{- $idadeAnos := math.Div (float $livedDays) 365.25 }}
 {{- $rows      := div (add $totalWeeks 51) 52 }}
 
 {{- $marcosJS     := slice }}

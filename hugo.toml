@@ -1,18 +1,20 @@
 baseURL = 'https://bruno.moe/'
 languageCode = 'pt-br'
-title = 'Blog do Bruno'
+defaultContentLanguage = 'pt-br'
+title = 'Bruno'
+enableRobotsTXT = true
 
 [params]
-  description = 'Meu blog pessoal sobre tecnologia e desenvolvimento'
+  description = 'Minha página'
   author = 'Bruno'
 
 [permalinks]
-  artigos = '/artigos/:slug'
+  ensaios = '/ensaios/:slug'
 
 [taxonomies]
   categoria = 'categorias'
-  tag      = 'tags'
-  serie    = 'series'
+  tag = 'tags'
+  serie = 'series'
 
 [markup.tableOfContents]
   startLevel = 2
@@ -28,22 +30,14 @@ title = 'Blog do Bruno'
 [security.funcs]
   getenv = ['^HUGO_', '^CI$']
 
-[security.exec]
-  allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^tailwindcss$']
-  osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
-
-[security.http]
-  methods = ['(?i)GET|POST']
-  urls    = ['.*']
-
 [[menus.main]]
   name    = 'Home'
   pageRef = '/'
   weight  = 10
 
 [[menus.main]]
-  name    = 'Artigos'
-  pageRef = '/artigos'
+  name    = 'Ensaios'
+  pageRef = '/ensaios'
   weight  = 20
 
 [[menus.main]]
