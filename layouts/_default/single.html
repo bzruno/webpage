@@ -53,9 +53,7 @@
   {{- if and .Params.toc (gt (len .TableOfContents) 50) }}
     <aside class="toc">
       <h2>Sumário</h2>
-      <nav id="TableOfContents">
-        {{ .TableOfContents }}
-      </nav>
+      {{ .TableOfContents }}
     </aside>
   {{- end }}
 

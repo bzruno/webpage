@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Teologia on Bruno</title>
-    <link>http://localhost:1313/categorias/teologia/</link>
-    <description>Recent content in Teologia on Bruno</description>
+    <title>Religião on Bruno</title>
+    <link>http://localhost:1313/series/religi%C3%A3o/</link>
+    <description>Recent content in Religião on Bruno</description>
     <generator>Hugo</generator>
     <language>pt-br</language>
     <lastBuildDate>Fri, 09 Feb 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categorias/teologia/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/series/religi%C3%A3o/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Teste</title>
       <link>http://localhost:1313/ensaios/teste/</link>

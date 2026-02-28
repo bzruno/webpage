@@ -3,7 +3,7 @@
   --bg-0: #080808;
   --bg-1: #141414;
   --bg-2: #242424;
-  --bg-3: #272727;
+  --bg-3: #303030;
 
   /* Bordas */
   --border: #6e6b6b;
@@ -18,10 +18,10 @@
 
   /* Links */
   --link: #f85757;
-  --link-hover: #f85757;
+  --link-hover: #ff7a7a;
 
   /* Fontes */
-  --font-serif: "Inter", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* Espaço */
@@ -55,7 +55,7 @@
 
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/inter-bold.woff2") format("woff2");
+  src: url("/fonts/Inter-Bold.woff2") format("woff2");
   font-weight: 700 900;
   font-style: normal;
   font-display: swap;
@@ -85,7 +85,7 @@
 }
 
 body {
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   color: var(--text-1);
@@ -138,7 +138,7 @@ h3 {
 h4,
 h5,
 h6 {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 h1 {
@@ -183,7 +183,7 @@ p {
 
 strong,
 b {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .subtitle {
@@ -206,6 +206,12 @@ a {
 a:hover {
   color: var(--link-hover);
   text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* ============================================================================
@@ -235,10 +241,15 @@ header {
   text-decoration: none;
 }
 
+.main-menu a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .main-menu a.active {
   color: var(--text-1);
   background: var(--bg-2);
-  font-weight: 600;
+  font-weight: 700;
   border-bottom: 2px solid var(--accent);
 }
 
@@ -336,6 +347,7 @@ header {
   background: var(--bg-3);
   border-color: var(--accent);
 }
+
 .categorias a {
   font-weight: 500;
   color: var(--text-1);
@@ -399,12 +411,18 @@ header {
    LISTAS (MARKDOWN)
    ========================================================================== */
 .content ul,
-.content ol {
+.content ol,
+main ul,
+main ol,
+article ul,
+article ol {
   margin: var(--s-4) 0 var(--s-6);
   padding-left: 1.75em;
 }
 
-.content li {
+.content li,
+main li,
+article li {
   margin: 0.4em 0;
   line-height: 1.6;
 }
@@ -412,15 +430,34 @@ header {
 .content ul ul,
 .content ol ol,
 .content ul ol,
-.content ol ul {
+.content ol ul,
+main ul ul,
+main ol ol,
+main ul ol,
+main ol ul,
+article ul ul,
+article ol ol,
+article ul ol,
+article ol ul {
   margin: var(--s-2) 0;
+}
+
+/* Evitar que as regras acima afetem listas de UI (nav, .ensaios, etc.) */
+.ensaios,
+.categorias,
+.series,
+.series-nav ul,
+nav ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* ============================================================================
    META DO ENSAIO
    ========================================================================== */
 .meta {
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-left: 4px solid var(--accent);
@@ -474,6 +511,7 @@ header {
   counter-reset: toc-item;
   list-style: none;
   padding-left: var(--s-6);
+  margin: var(--s-1) 0;
 }
 
 .toc nav#TableOfContents li {
@@ -485,7 +523,7 @@ header {
   content: counters(toc-item, ".") ". ";
   counter-increment: toc-item;
   color: var(--accent);
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   margin-right: var(--s-2);
 }
 
@@ -527,7 +565,7 @@ header {
   border-bottom: none;
 }
 .series-nav li.active {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent);
 }
 .series-nav a {
@@ -597,8 +635,6 @@ table {
   border-collapse: collapse;
   width: 100%;
   margin: var(--s-6) 0;
-  border-radius: var(--r);
-  overflow: hidden;
   border: 1px solid var(--border);
 }
 
@@ -611,7 +647,7 @@ td {
 
 th {
   background: var(--bg-2);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-1);
   border-bottom: 2px solid var(--accent);
 }
@@ -638,14 +674,39 @@ blockquote p:last-child {
 /* ============================================================================
    IMAGENS
    ========================================================================== */
-.content img {
+main img,
+article img {
   max-width: 100%;
   height: auto;
+  display: block;
   border-radius: var(--r);
-  margin: var(--s-6) 0;
-  border: 1px solid var(--border);
 }
 
+figure.img-figure {
+  display: block;
+  margin: var(--s-8) auto;
+  max-width: 400px;
+  width: 100%;
+}
+
+figure.img-figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--r);
+}
+
+figure.img-figure figcaption {
+  margin-top: var(--s-2);
+  font-size: 0.85em;
+  color: var(--text-2);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ── Buttons 88×31 ─────────────────────────────────────────────────────── */
 .buttons {
   display: flex;
   flex-wrap: wrap;
@@ -653,15 +714,22 @@ blockquote p:last-child {
   align-items: center;
   gap: var(--s-2);
   text-align: center;
+  margin: var(--s-6) 0;
 }
 
-.buttons p {
+.buttons figure.img-figure {
   display: contents;
 }
+
+.buttons figure.img-figure figcaption {
+  display: none;
+}
+
 .buttons img {
   width: 88px;
   height: 31px;
   display: block;
+  margin: 0;
 }
 
 /* ============================================================================
@@ -722,7 +790,7 @@ blockquote p:last-child {
 
 .lifegrid-caption {
   margin-top: var(--s-4);
-  font-size: 0.75em;
+  font-size: 0.9em;
   line-height: 1.6;
   color: var(--text-1);
   text-align: center;
@@ -809,7 +877,6 @@ blockquote p:last-child {
   table {
     display: block;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
   .toc {
     padding: var(--s-3);

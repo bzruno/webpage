@@ -24,6 +24,9 @@ enableRobotsTXT = true
 [markup.goldmark.renderer]
   unsafe = true
 
+[markup.goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false
+
 [security]
   enableInlineShortcodes = true
 
