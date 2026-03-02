@@ -9,7 +9,7 @@ enableRobotsTXT = true
   author = 'Bruno'
 
 [permalinks]
-  ensaios = '/ensaios/:slug'
+  artigos = '/artigos/:slug'
 
 [taxonomies]
   categoria = 'categorias'
@@ -39,8 +39,8 @@ enableRobotsTXT = true
   weight  = 10
 
 [[menus.main]]
-  name    = 'Ensaios'
-  pageRef = '/ensaios'
+  name    = 'Artigos'
+  pageRef = '/artigos'
   weight  = 20
 
 [[menus.main]]

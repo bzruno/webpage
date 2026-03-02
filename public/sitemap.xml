@@ -2,22 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/artigos/</loc>
+    <lastmod>2024-02-09T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/</loc>
     <lastmod>2024-02-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categorias/</loc>
     <lastmod>2024-02-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categorias/dieta/</loc>
-    <lastmod>2024-02-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/ensaios/</loc>
-    <lastmod>2024-02-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/series/grana/</loc>
-    <lastmod>2024-02-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/ensaios/guia-completo-de-markdown/</loc>
+    <loc>http://localhost:1313/series/religi%C3%A3o/</loc>
     <lastmod>2024-02-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/series/</loc>
@@ -25,6 +19,11 @@
   </url><url>
     <loc>http://localhost:1313/categorias/teologia/</loc>
     <lastmod>2024-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/artigos/teste/</loc>
+    <lastmod>2024-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categorias/dieta/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url><url>

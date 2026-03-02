@@ -10,10 +10,10 @@
     <atom:link href="http://localhost:1313/categorias/teologia/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Teste</title>
-      <link>http://localhost:1313/ensaios/teste/</link>
+      <link>http://localhost:1313/artigos/teste/</link>
       <pubDate>Fri, 09 Feb 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/ensaios/teste/</guid>
-      <description></description>
+      <guid>http://localhost:1313/artigos/teste/</guid>
+      <description>&lt;h2 id=&#34;identidade-de-euler&#34;&gt;Identidade de Euler&lt;/h2&gt;&#xA;&lt;p&gt;$$e^{i\pi} + 1 = 0$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;fórmula-de-bhaskara&#34;&gt;Fórmula de Bhaskara&lt;/h2&gt;&#xA;&lt;p&gt;$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;série-de-taylor&#34;&gt;Série de Taylor&lt;/h2&gt;&#xA;&lt;p&gt;$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;transformada-de-fourier&#34;&gt;Transformada de Fourier&lt;/h2&gt;&#xA;&lt;p&gt;$$\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x), e^{-2\pi i x \xi}, dx$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;equação-de-schrödinger&#34;&gt;Equação de Schrödinger&lt;/h2&gt;&#xA;&lt;p&gt;$$i\hbar \frac{\partial}{\partial t}\Psi(\mathbf{r}, t) = \left[ -\frac{\hbar^2}{2m}\nabla^2 + V(\mathbf{r}, t) \right] \Psi(\mathbf{r}, t)$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;equações-de-maxwell&#34;&gt;Equações de Maxwell&lt;/h2&gt;&#xA;&lt;p&gt;$$\nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}$$&lt;/p&gt;&#xA;&lt;p&gt;$$\nabla \cdot \mathbf{B} = 0$$&lt;/p&gt;&#xA;&lt;p&gt;$$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

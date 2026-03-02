@@ -1,11 +1,11 @@
 ---
 title: "Bem-vindo à minha página"
-description: "Página pessoal de Bruno — ensaios, projetos e ideias."
+description: "Um blog pessoal"
 ---
 
 ## Olá, me chamo Bruno
 
-Essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu gosto e talvez postar alguns projetos.
+E essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu gosto e talvez postar alguns projetos.
 
 <div class="buttons">
 
@@ -25,9 +25,9 @@ Essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu g
 
 </div>
 
-## Ensaios
+## Artigos
 
-{{< lista-ensaios >}}
+{{< lista-artigos >}}
 
 ## Categorias
 

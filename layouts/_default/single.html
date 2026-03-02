@@ -15,6 +15,7 @@
     {{- with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{- end }}
     <div class="meta">
       <div class="taxonomy-date">
+        📅
         {{ partial "date.html" . }}
       </div>
 
@@ -52,7 +53,7 @@
 
   {{- if and .Params.toc (gt (len .TableOfContents) 50) }}
     <aside class="toc">
-      <h2>Sumário</h2>
+      <h2>📑 Sumário</h2>
       {{ .TableOfContents }}
     </aside>
   {{- end }}

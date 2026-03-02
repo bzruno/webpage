@@ -11,7 +11,7 @@ part:
 toc: true
 ---
 
-Resumo do ensaio aqui.
+Resumo do artigo aqui.
 
 <!--more-->
 
@@ -21,4 +21,4 @@ Conteúdo aqui.
 
 ## Conclusão
 
-Conclusão do ensaio.
+Conclusão do artigo.

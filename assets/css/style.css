@@ -86,8 +86,8 @@
 
 body {
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 1em;
+  line-height: 1.7;
   color: var(--text-1);
   background: var(--bg-0);
   max-width: 920px;
@@ -105,7 +105,7 @@ article {
 }
 
 ::selection {
-  background: rgba(235, 117, 71, 0.25);
+  background: rgba(180, 111, 54, 0.342);
   color: #fff;
 }
 
@@ -274,15 +274,15 @@ header {
 }
 
 /* ============================================================================
-   LISTA DE ENSAIOS
+   LISTA DE ARTIGOS
    ========================================================================== */
-.ensaios {
+.artigos {
   list-style: none;
   padding: 0;
   margin: var(--s-6) 0;
 }
 
-.ensaios li {
+.artigos li {
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
@@ -297,24 +297,16 @@ header {
     border-left-color 0.2s;
 }
 
-.ensaios li:hover {
+.artigos li:hover {
   background: var(--bg-3);
 }
 
-.ensaios time {
-  flex-shrink: 0;
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  color: var(--accent-muted);
-  font-weight: 500;
-}
-
-.ensaios a {
+.artigos a {
   font-weight: 500;
   color: var(--text-1);
 }
 
-.ensaios a:hover {
+.artigos a:hover {
   color: var(--link-hover);
   text-decoration: none;
 }
@@ -442,8 +434,8 @@ article ol ul {
   margin: var(--s-2) 0;
 }
 
-/* Evitar que as regras acima afetem listas de UI (nav, .ensaios, etc.) */
-.ensaios,
+/* Evitar que as regras acima afetem listas de UI (nav, .artigos, etc.) */
+.artigos,
 .categorias,
 .series,
 .series-nav ul,
@@ -454,10 +446,9 @@ nav ul {
 }
 
 /* ============================================================================
-   META DO ENSAIO
+   META DO artigo
    ========================================================================== */
 .meta {
-  font-family: var(--font-body);
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-left: 4px solid var(--accent);
@@ -725,13 +716,6 @@ figure.img-figure figcaption {
   display: none;
 }
 
-.buttons img {
-  width: 88px;
-  height: 31px;
-  display: block;
-  margin: 0;
-}
-
 /* ============================================================================
    FOOTNOTES
    ========================================================================== */
@@ -834,7 +818,7 @@ figure.img-figure figcaption {
    ========================================================================== */
 @media (max-width: 768px) {
   body {
-    font-size: 15px;
+    font-size: 18px;
     padding: 0 var(--s-4);
   }
   main,
@@ -859,12 +843,12 @@ figure.img-figure figcaption {
     gap: var(--s-2);
     text-align: center;
   }
-  .ensaios li {
+  .artigos li {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--s-2);
   }
-  .ensaios time {
+  .artigos time {
     font-size: 0.8em;
   }
   .categorias {
@@ -904,4 +888,24 @@ figure.img-figure figcaption {
   .breadcrumb {
     font-size: 0.8em;
   }
+}
+
+/* ============================================================================
+   KATEX — renderização de LaTeX
+   ========================================================================== */
+.katex {
+  font-size: 1.2em !important;
+  color: var(--text-1);
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--s-4) 0;
+  margin: var(--s-6) 0;
+}
+
+.katex-display > .katex {
+  font-size: 1.2em !important;
+  color: var(--text-1);
 }
