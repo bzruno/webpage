@@ -6,7 +6,9 @@ enableRobotsTXT = true
 
 [params]
   description = 'Minha página'
-  author = 'Bruno'
+
+[params.author]
+  name = 'Bruno'
 
 [permalinks]
   artigos = '/artigos/:slug'

@@ -15,16 +15,33 @@
   <h1>{{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}{{ .LinkTitle }}</h1>
   {{- .Content }}
 
-  {{- if eq .Kind "taxonomy" }}
-    <ul class="{{ .Data.Plural }}">
-      {{- range .Pages }}
-      <li>
-        {{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-        <small>({{ len .Pages }})</small>
-      </li>
-      {{- end }}
-    </ul>
+  {{- if or (eq .Kind "taxonomy") (eq .Kind "term") }}
+    {{- if eq .Kind "taxonomy" }}
+      {{/* Página de índice da taxonomia: lista os termos (ex: /categorias/) */}}
+      <ul class="{{ .Data.Plural }}">
+        {{- range .Pages }}
+        <li>
+          {{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          <small>({{ len .Pages }})</small>
+        </li>
+        {{- end }}
+      </ul>
+    {{- else }}
+      {{/* Página de termo: lista os artigos desse termo (ex: /categorias/teologia/) */}}
+      {{- $pages := .Pages.ByDate.Reverse }}
+      <ul class="artigos">
+        {{- range $pages }}
+        <li>
+          {{- partial "date.html" . }}
+          <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+        </li>
+        {{- else }}
+        <li>Nenhum artigo encontrado.</li>
+        {{- end }}
+      </ul>
+    {{- end }}
   {{- else }}
+    {{/* Página de seção normal (ex: /artigos/) */}}
     {{- $pages := .Pages.ByDate.Reverse }}
     <ul class="artigos">
       {{- range $pages }}
