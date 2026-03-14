@@ -1,10 +1,9 @@
-{{- $terms := site.GetPage "/series" }}
-{{- with $terms.Pages }}
+{{- with site.Taxonomies.series }}
 <ul class="series">
-  {{- range . }}
+  {{- range .Alphabetical }}
   <li>
-    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-    <small>({{ len .Pages }})</small>
+    <a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+    <small>({{ .Count }})</small>
   </li>
   {{- end }}
 </ul>
