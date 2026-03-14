@@ -6,9 +6,14 @@ enableRobotsTXT = true
 
 [params]
   description = 'Minha página'
+  ogImage     = '/images/favicon.ico'
 
 [params.author]
   name = 'Bruno'
+
+[params.lifegrid]
+  birthDate      = '1997-05-01'
+  lifeExpectancy = 90
 
 [permalinks]
   artigos = '/artigos/:slug'

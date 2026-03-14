@@ -1,3 +1,6 @@
+/* ============================================================================
+   VARIÁVEIS
+   ========================================================================== */
 :root {
   /* Fundo */
   --bg-0: #080808;
@@ -21,7 +24,7 @@
   --link-hover: #ff7a7a;
 
   /* Fontes */
-  --font-body: "CM", system-ui, -apple-system, sans-serif;
+  --font-body: Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* Espaço */
@@ -33,30 +36,18 @@
   --s-8: 2rem;
   --s-12: 3rem;
 
-  /* Raio único */
+  /* Raio */
   --r: 6px;
 }
 
 /* ============================================================================
-   FONTES (self-hosted — sem requisições externas)
+   FONTES
    ========================================================================== */
-
-@font-face {
-  font-family: "CM";
-  src: url("/fonts/NewCM10-Book.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-  unicode-range:
-    U+00-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308,
-    U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
-    U+FFFD;
-}
 
 @font-face {
   font-family: "JetBrains Mono Variable";
   src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
-  font-weight: 100 800;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -74,8 +65,9 @@
 
 body {
   font-family: var(--font-body);
-  font-size: 1.2em;
+  font-size: 1.125rem;
   line-height: 1.7;
+  letter-spacing: 0.01em;
   color: var(--text-1);
   background: var(--bg-0);
   max-width: 920px;
@@ -83,17 +75,8 @@ body {
   padding: 0 var(--s-6);
 }
 
-main,
-article {
-  background: var(--bg-1);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: var(--s-8);
-  margin: var(--s-4) 0;
-}
-
 ::selection {
-  background: rgba(180, 111, 54, 0.342);
+  background: rgba(180, 111, 54, 0.35);
   color: #fff;
 }
 
@@ -101,6 +84,18 @@ hr {
   border: none;
   border-top: 1px solid var(--border);
   margin: var(--s-8) 0;
+}
+
+/* ============================================================================
+   LAYOUT PRINCIPAL
+   ========================================================================== */
+main,
+article {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: var(--s-8);
+  margin: var(--s-4) 0;
 }
 
 /* ============================================================================
@@ -122,7 +117,7 @@ h3,
 h4,
 h5,
 h6 {
-  line-height: 1.6;
+  line-height: 1.4;
   color: var(--text-1);
   margin: var(--s-8) 0 var(--s-2);
 }
@@ -130,27 +125,28 @@ h6 {
 h1,
 h2,
 h3 {
-  font-weight: 800;
+  font-weight: 700;
 }
 
 h4,
 h5,
 h6 {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 2rem;
   text-align: center;
   border-bottom: 1px solid var(--accent);
   padding-bottom: var(--s-2);
   margin-top: 0;
   margin-bottom: var(--s-12);
   color: var(--accent);
+  letter-spacing: -0.01em;
 }
 
 h2 {
-  font-size: 1.3em;
+  font-size: 1.35rem;
   border-bottom: 1px solid var(--accent);
   padding-bottom: var(--s-1);
   margin-bottom: var(--s-2);
@@ -159,23 +155,27 @@ h2 {
 
 h3,
 h4 {
-  font-size: 1.1em;
+  font-size: 1.1rem;
 }
 
 h5 {
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 h6 {
-  font-size: 0.875em;
+  font-size: 0.875rem;
   color: var(--text-2);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 p {
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: var(--s-6);
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 strong,
@@ -212,10 +212,9 @@ a:focus-visible {
 }
 
 /* ============================================================================
-   NAVEGAÇÃO
+   NAVEGAÇÃO PRINCIPAL
    ========================================================================== */
 header {
-  margin-bottom: var(--s-4);
   padding-bottom: var(--s-4);
 }
 
@@ -230,6 +229,7 @@ header {
   padding: var(--s-2) var(--s-4);
   border-radius: var(--r);
   color: var(--text-1);
+  transition: color 0.15s, background 0.15s;
 }
 
 .main-menu a:hover,
@@ -242,26 +242,23 @@ header {
   color: var(--link-hover);
 }
 
-.main-menu a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
 .main-menu a.active {
-  color: var(--text-1);
   font-weight: 700;
   border-bottom: 2px solid var(--accent);
 }
 
+/* ============================================================================
+   BREADCRUMB
+   ========================================================================== */
 .breadcrumb {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--text-2);
   margin-bottom: var(--s-6);
+  background: var(--bg-2);
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
   border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-2) var(--s-4);
-  background: var(--bg-2);
 }
 
 .breadcrumb a {
@@ -275,7 +272,7 @@ header {
 }
 
 /* ============================================================================
-   LISTAS DE ARTIGOS E SÉRIES — estilos compartilhados
+   LISTAS DE ARTIGOS E SÉRIES
    ========================================================================== */
 .artigos,
 .series {
@@ -292,9 +289,10 @@ header {
   border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-4);
   margin: var(--s-4) 0;
-  transition:
-    background 0.2s,
-    border-left-color 0.2s;
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  transition: background 0.2s, border-left-color 0.2s;
 }
 
 .artigos li:hover,
@@ -312,12 +310,6 @@ header {
 .series a:hover {
   color: var(--link-hover);
   text-decoration: none;
-}
-
-.artigos li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-4);
 }
 
 .series small {
@@ -346,9 +338,7 @@ header {
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: var(--s-2) var(--s-4);
-  transition:
-    background 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .categorias li:hover {
@@ -374,30 +364,19 @@ header {
 }
 
 /* ============================================================================
-   LISTAS (MARKDOWN)
+   LISTAS (CONTEÚDO — MARKDOWN)
    ========================================================================== */
-main ul,
-main ol,
-article ul,
-article ol {
+:is(main, article) :is(ul, ol) {
   margin: var(--s-4) 0 var(--s-6);
   padding-left: 1.75em;
 }
 
-main li,
-article li {
+:is(main, article) li {
   margin: 0.4em 0;
   line-height: 1.6;
 }
 
-main ul ul,
-main ol ol,
-main ul ol,
-main ol ul,
-article ul ul,
-article ol ol,
-article ul ol,
-article ol ul {
+:is(main, article) :is(ul, ol) :is(ul, ol) {
   margin: var(--s-2) 0;
 }
 
@@ -408,26 +387,21 @@ article ol ul {
 .series-nav ul,
 nav ul {
   padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 /* ============================================================================
    META DO ARTIGO
    ========================================================================== */
 .meta {
-  border-left-width: 4px;
-  padding: var(--s-4) var(--s-6);
-  color: var(--text-2);
-  margin: var(--s-8) 0;
-  text-align: center;
-
-  /* herda bg-2 + border + accent do .panel quando usado em conjunto,
-     ou declara aqui para uso standalone */
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-left: 4px solid var(--accent);
   border-radius: var(--r);
+  padding: var(--s-4) var(--s-6);
+  margin: var(--s-8) 0;
+  color: var(--text-2);
+  text-align: center;
 }
 
 .meta div {
@@ -452,13 +426,12 @@ nav ul {
   border-left: 4px solid var(--accent);
   border-radius: var(--r);
   padding: var(--s-4);
-  margin: var(--s-8) 0;
 }
 
 .toc h2 {
   border-bottom: 1px solid var(--border);
   padding-bottom: var(--s-1);
-  margin: 0 0 var(--s-2) 0;
+  margin: 0 0 var(--s-2);
   color: var(--accent);
 }
 
@@ -487,7 +460,8 @@ nav ul {
   content: counters(toc-item, ".") ". ";
   counter-increment: toc-item;
   color: var(--accent);
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
   margin-right: var(--s-2);
 }
 
@@ -515,7 +489,7 @@ nav ul {
   margin-top: 0;
   margin-bottom: var(--s-4);
   color: var(--accent);
-  font-size: 1.1em;
+  font-size: 1.05rem;
 }
 
 .series-nav ul {
@@ -560,7 +534,7 @@ nav ul {
 .post-footer nav {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9em;
+  font-size: 0.9rem;
 }
 
 .post-footer a {
@@ -576,7 +550,7 @@ code {
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: var(--r);
-  padding: 0.125rem 0.375rem;
+  padding: 0.1em 0.35em;
   font-size: 0.875em;
   color: var(--accent-muted);
 }
@@ -647,8 +621,7 @@ blockquote p:last-child {
 /* ============================================================================
    IMAGENS
    ========================================================================== */
-main img,
-article img {
+:is(main, article) img {
   max-width: 100%;
   height: auto;
   display: block;
@@ -663,11 +636,9 @@ figure.img-figure {
 }
 
 figure.img-figure img {
-  display: block;
   max-width: 100%;
   height: auto;
   margin: 0 auto;
-  border-radius: var(--r);
 }
 
 figure.img-figure figcaption {
@@ -679,7 +650,6 @@ figure.img-figure figcaption {
   line-height: 1.4;
 }
 
-/* ── Buttons 88×31 ─────────────────────────────────────────────────────── */
 .buttons {
   display: flex;
   flex-wrap: wrap;
@@ -778,25 +748,40 @@ figure.img-figure figcaption {
 }
 
 /* ============================================================================
+   KATEX — renderização de LaTeX
+   ========================================================================== */
+.katex,
+.katex-display > .katex {
+  font-size: 1.1em;
+  color: var(--text-1);
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--s-4) 0;
+  margin: var(--s-6) 0;
+}
+
+/* ============================================================================
    RESPONSIVIDADE
    ========================================================================== */
 @media (max-width: 768px) {
   body {
-    font-size: 18px;
+    font-size: 1rem;
     padding: 0 var(--s-4);
   }
 
-  main,
-  article {
+  :is(main, article) {
     padding: var(--s-4);
   }
 
   h1 {
-    font-size: 1.75em;
+    font-size: 1.6rem;
   }
 
   h2 {
-    font-size: 1.35em;
+    font-size: 1.2rem;
   }
 
   .main-menu {
@@ -863,26 +848,10 @@ figure.img-figure figcaption {
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 1.5em;
+    font-size: 1.35rem;
   }
 
   .breadcrumb {
     font-size: 0.8em;
   }
-}
-
-/* ============================================================================
-   KATEX — renderização de LaTeX
-   ========================================================================== */
-.katex,
-.katex-display > .katex {
-  font-size: 1.1em !important;
-  color: var(--text-1);
-}
-
-.katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: var(--s-4) 0;
-  margin: var(--s-6) 0;
 }
