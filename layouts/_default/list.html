@@ -24,6 +24,8 @@
           {{ with .Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
           <small>({{ len .Pages }})</small>
         </li>
+        {{- else }}
+        <li>Nenhuma item encontrado.</li>
         {{- end }}
       </ul>
     {{- else }}
@@ -36,7 +38,7 @@
           <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
         </li>
         {{- else }}
-        <li>Nenhum artigo encontrado.</li>
+        <li>Nenhuma artigo encontrado.</li>
         {{- end }}
       </ul>
     {{- end }}
@@ -50,7 +52,7 @@
         <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
       </li>
       {{- else }}
-      <li>Nenhum artigo encontrado.</li>
+      <li>Nenhuma artigo encontrado.</li>
       {{- end }}
     </ul>
   {{- end }}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cut -d'{' -f1)",
+      "Bash(for file:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/BRNO/Documents/Hugo/Blog/**)",
+      "Bash(done)",
+      "Bash(find C:UsersBRNODocumentsHugoBlogcontentcategorias -name *index* -type f)",
+      "Bash(xargs ls:*)"
+    ]
+  }
+}

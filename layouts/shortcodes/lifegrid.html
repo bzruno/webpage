@@ -1,4 +1,4 @@
-{{- $birthDate := time "1997-05-01" }}
+{{- $birthDate := time (string site.Params.lifegrid.birthDate) }}
 {{- $now       := now }}
 
 {{- $marcos := slice
@@ -9,7 +9,7 @@
   (dict "data" (time "2021-12-10") "nome" "Primeira formação acadêmica" "cor" "#5aa9e6")
 }}
 
-{{- $totalSecs  := sub (time (printf "%d-05-01" (add $birthDate.Year 90))).Unix $birthDate.Unix }}
+{{- $totalSecs  := sub (time (printf "%d-05-01" (add $birthDate.Year (int site.Params.lifegrid.lifeExpectancy)))).Unix $birthDate.Unix }}
 {{- $totalWeeks := div $totalSecs 604800 }}
 {{- $livedSecs  := sub $now.Unix $birthDate.Unix }}
 {{- $livedWeeks := div $livedSecs 604800 }}
