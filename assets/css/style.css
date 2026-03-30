@@ -3,21 +3,22 @@
    ========================================================================== */
 :root {
   /* Fundo */
-  --bg-0: #080808;
+  --bg-0: #0c0c0c;
   --bg-1: #141414;
   --bg-2: #242424;
   --bg-3: #303030;
 
   /* Bordas */
-  --border: #6e6b6b;
+  --border: #605c58;
 
   /* Texto */
   --text-1: #e9ded1;
-  --text-2: #d8c9b8;
+  --text-2: #d8cbbc;
 
   /* Acento */
   --accent: #fa774f;
-  --accent-muted: #dfd7ce;
+  --accent-rgb: 250, 119, 79;
+  --accent-muted: #cec1ae;
 
   /* Links */
   --link: #f85757;
@@ -38,6 +39,9 @@
 
   /* Raio */
   --r: 6px;
+
+  /* Sombra */
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
 /* ============================================================================
@@ -76,8 +80,8 @@ body {
 }
 
 ::selection {
-  background: rgba(180, 111, 54, 0.35);
-  color: #fff;
+  background: rgba(var(--accent-rgb), 0.3);
+  color: var(--text-1);
 }
 
 hr {
@@ -562,7 +566,7 @@ pre {
   overflow-x: auto;
   margin: var(--s-6) 0;
   line-height: 1.5;
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 4px var(--shadow);
 }
 
 pre code {
