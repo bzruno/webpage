@@ -7,6 +7,11 @@
         / <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
       {{- end }}
     {{- end }}
+    {{- if eq .Section "blog" }}
+      {{- with site.GetPage "/blog/artigos" }}
+        / <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{- end }}
+    {{- end }}
     / <span aria-current="page">{{ .LinkTitle }}</span>
   </nav>
 
@@ -25,16 +30,6 @@
           {{- range $i, $term := . }}
             {{- if $i }}, {{ end }}
             {{ with $term.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
-          {{- end }}
-        </div>
-      {{- end }}
-
-      {{- with .GetTerms "tags" }}
-        <div class="taxonomy-tags">
-          Tags:
-          {{- range $i, $term := . }}
-            {{- if $i }}, {{ end }}
-            <a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
           {{- end }}
         </div>
       {{- end }}
@@ -83,11 +78,18 @@
 
   <footer class="post-footer">
     <nav>
+      {{- if eq .Section "blog" }}
+      <a href="{{ .CurrentSection.RelPermalink }}">&larr; Voltar ao blog</a>
+      {{- with site.GetPage "/blog/artigos" }}
+        <a href="{{ .RelPermalink }}">Mais artigos &rarr;</a>
+      {{- end }}
+      {{- else }}
       <a href="/">&larr; Home</a>
       {{- with .CurrentSection }}
         {{- if not .IsHome }}
           <a href="{{ .RelPermalink }}">Mais {{ .LinkTitle | lower }} &rarr;</a>
         {{- end }}
+      {{- end }}
       {{- end }}
     </nav>
   </footer>

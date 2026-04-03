@@ -1,0 +1,53 @@
+{{- define "main" }}
+<main>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    / <span aria-current="page">{{ .LinkTitle }}</span>
+  </nav>
+
+  <h1>Bem-vindo ao meu blog</h1>
+
+  {{- with .Content }}{{ . }}{{ end }}
+
+  <h2>Artigos</h2>
+  {{- $pages := .Pages.ByDate.Reverse | first 10 }}
+  <ul class="artigos">
+    {{- range $pages }}
+    <li>
+      {{- partial "date.html" . }}
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    </li>
+    {{- else }}
+    <li>Nenhum artigo encontrado.</li>
+    {{- end }}
+  </ul>
+
+  <h2>Categorias</h2>
+  {{- with site.Taxonomies.categorias }}
+  <ul class="categorias">
+    {{- range .Alphabetical }}
+    <li>
+      {{ with .Page.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+      <small>({{ .Count }})</small>
+    </li>
+    {{- end }}
+  </ul>
+  {{- else }}
+  <p>Nenhuma categoria encontrada.</p>
+  {{- end }}
+
+  <h2>Séries</h2>
+  {{- with site.Taxonomies.series }}
+  <ul class="series">
+    {{- range .Alphabetical }}
+    <li>
+      <a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+      <small>({{ .Count }})</small>
+    </li>
+    {{- end }}
+  </ul>
+  {{- else }}
+  <p>Nenhuma série encontrada.</p>
+  {{- end }}
+</main>
+{{- end }}

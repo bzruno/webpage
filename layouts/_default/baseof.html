@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+  <title>{{ if .IsHome }}Bruno | {{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
   <meta name="author" content="{{ site.Params.author.name }}">
 
@@ -37,14 +37,29 @@
   {{- block "head-extra" . }}{{- end }}
 </head>
 <body>
-  {{- with site.Menus.main }}
+  {{- if not .IsHome }}
+  {{- $isBlogDomain := or (eq .Section "blog") (in (slice "series" "categorias") .Data.Plural) }}
+  {{- $menuName := cond $isBlogDomain "blog" (cond (eq .Section "projetos") "projetos" "main") }}
+  {{- $menu := index site.Menus $menuName }}
+  {{- with $menu }}
+  {{- $cur := $.RelPermalink }}
   <header>
     <nav class="main-menu">
       {{- range . }}
-      <a href="{{ .URL }}"{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} class="active"{{ end }}>{{ .Name }}</a>
+      {{- $u := .URL }}
+      {{- $active := false }}
+      {{- if eq $u "/" }}
+        {{- $active = $.IsHome }}
+      {{- else if and (eq $menuName "blog") (eq $u (site.GetPage "/blog").RelPermalink) }}
+        {{- $active = eq $cur (site.GetPage "/blog").RelPermalink }}
+      {{- else }}
+        {{- $active = strings.HasPrefix $cur $u }}
+      {{- end }}
+      <a href="{{ $u }}"{{ if $active }} class="active"{{ end }}>{{ .Name }}</a>
       {{- end }}
     </nav>
   </header>
+  {{- end }}
   {{- end }}
 
   {{- block "main" . }}{{- end }}

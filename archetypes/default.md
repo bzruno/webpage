@@ -5,7 +5,6 @@ description: ""
 date: {{ .Date }}
 draft: false
 categorias: []
-tags: []
 series: []
 part:
 toc: true

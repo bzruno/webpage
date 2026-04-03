@@ -3,6 +3,9 @@
   {{- if not .IsHome }}
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a>
+    {{- if in (slice "series" "categorias") .Data.Plural }}
+      {{- with site.GetPage "/blog" }}/ <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
+    {{- end }}
     {{- range .Ancestors.Reverse }}
       {{- if not .IsHome }}
         / <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>

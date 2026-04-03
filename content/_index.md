@@ -1,6 +1,6 @@
 ---
 title: "Bem-vindo à minha página"
-description: "Um blog pessoal"
+description: "Página pessoal de Bruno"
 ---
 
 ## Olá, me chamo Bruno
@@ -23,17 +23,14 @@ E essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu
 
 </div>
 
-## Artigos
+<div class="home-avatar">
+<img src="/images/eu.svg" alt="Logo Bruno" width="200">
+</div>
 
-{{< lista-artigos >}}
-
-## Categorias
-
-{{< lista-categorias >}}
-
-## Séries
-
-{{< lista-series >}}
+<nav class="home-links">
+<a href="/blog">Blog</a>
+<a href="/projetos">Projetos</a>
+</nav>
 
 ## Vida em semanas
 

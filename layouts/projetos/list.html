@@ -1,0 +1,24 @@
+{{- define "main" }}
+<main>
+  <h1>Bem-vindo aos meus projetos</h1>
+
+  {{- $projetos := .Pages.ByDate.Reverse }}
+  <ul class="projetos">
+    {{- range $projetos }}
+    <li>
+      <div class="projetos-header">
+        {{- $href := .RelPermalink }}
+        {{- with .Params.link }}{{ $href = . }}{{ end }}
+        <a href="{{ $href }}"{{ with .Params.link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>
+        <span class="projetos-status">[{{ .Params.status }}]</span>
+      </div>
+      {{- with .Description }}
+      <p class="projetos-desc">{{ . }}</p>
+      {{- end }}
+    </li>
+    {{- else }}
+    <li>Nenhum projeto encontrado.</li>
+    {{- end }}
+  </ul>
+</main>
+{{- end }}

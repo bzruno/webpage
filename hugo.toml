@@ -1,7 +1,7 @@
 baseURL = 'https://bruno.moe/'
 languageCode = 'pt-br'
 defaultContentLanguage = 'pt-br'
-title = 'Bruno'
+title = 'Minha página'
 enableRobotsTXT = true
 
 [params]
@@ -16,11 +16,17 @@ enableRobotsTXT = true
   lifeExpectancy = 90
 
 [permalinks]
-  artigos = '/artigos/:slug'
+  [permalinks.page]
+    blog = '/blog/artigos/:slug'
+  [permalinks.taxonomy]
+    categorias = '/blog/categorias'
+    series     = '/blog/series'
+  [permalinks.term]
+    categorias = '/blog/categorias/:slug'
+    series     = '/blog/series/:slug'
 
 [taxonomies]
   categoria = 'categorias'
-  tag = 'tags'
   serie = 'series'
 
 [markup.tableOfContents]
@@ -46,16 +52,56 @@ enableRobotsTXT = true
   weight  = 10
 
 [[menus.main]]
-  name    = 'Artigos'
-  pageRef = '/artigos'
+  name    = 'Blog'
+  pageRef = '/blog'
   weight  = 20
 
 [[menus.main]]
-  name    = 'Categorias'
-  pageRef = '/categorias'
+  name    = 'Projetos'
+  pageRef = '/projetos'
   weight  = 30
 
 [[menus.main]]
+  name    = 'Categorias'
+  url     = '/blog/categorias/'
+  weight  = 40
+
+[[menus.main]]
   name    = 'Séries'
-  pageRef = '/series'
+  url     = '/blog/series/'
+  weight  = 50
+
+[[menus.projetos]]
+  name    = 'Home'
+  pageRef = '/'
+  weight  = 10
+
+[[menus.projetos]]
+  name    = 'Projetos'
+  pageRef = '/projetos'
+  weight  = 20
+
+[[menus.blog]]
+  name    = 'Home'
+  pageRef = '/'
+  weight  = 10
+
+[[menus.blog]]
+  name    = 'Blog'
+  pageRef = '/blog'
+  weight  = 15
+
+[[menus.blog]]
+  name    = 'Artigos'
+  pageRef = '/blog/artigos'
+  weight  = 20
+
+[[menus.blog]]
+  name    = 'Categorias'
+  url     = '/blog/categorias/'
+  weight  = 30
+
+[[menus.blog]]
+  name    = 'Séries'
+  url     = '/blog/series/'
   weight  = 40

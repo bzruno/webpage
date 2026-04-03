@@ -7,7 +7,13 @@
       "Read(//c/Users/BRNO/Documents/Hugo/Blog/**)",
       "Bash(done)",
       "Bash(find C:UsersBRNODocumentsHugoBlogcontentcategorias -name *index* -type f)",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(hugo --minify --gc)",
+      "Bash(hugo --cleanDestinationDir --minify)",
+      "Bash(hugo --minify)",
+      "Bash(sed 's/^[ \\\\t]*\\\\.//g')",
+      "Bash(sed 's/class=\"//g')",
+      "Bash(sed 's/\"//g')"
     ]
   }
 }
