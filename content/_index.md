@@ -7,6 +7,10 @@ description: "Página pessoal de Bruno"
 
 E essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu gosto e talvez postar alguns projetos.
 
+<div class="home-avatar">
+<img src="/images/eu.svg" alt="Logo Bruno" width="200">
+</div>
+
 <div class="buttons">
 
 [![Anything But Chrome](/images/88x31/anythingbut.gif)](https://spyware.neocities.org/articles/chrome_ptbr)
@@ -21,10 +25,6 @@ E essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu
 
 [![Free Speech](/images/88x31/speech.gif)](https://www.activism.net/cypherpunk/manifesto.html)
 
-</div>
-
-<div class="home-avatar">
-<img src="/images/eu.svg" alt="Logo Bruno" width="200">
 </div>
 
 <nav class="home-links">

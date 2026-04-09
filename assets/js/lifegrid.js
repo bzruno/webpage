@@ -3,6 +3,8 @@ function initLifeGrid(config) {
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
   const { totalWeeks, livedWeeks, weeksPerRow, rows, marcosEspeciais } = config;
   const baseSquareSize = 10;
   const baseGap = 2;
@@ -13,8 +15,9 @@ function initLifeGrid(config) {
   function resizeCanvas() {
     const container = canvas.parentElement;
     const containerWidth = container.clientWidth;
-    const maxCanvasWidth = Math.min(containerWidth * 0.95, weeksPerRow * (baseSquareSize + baseGap) - baseGap);
-    const scale = maxCanvasWidth / (weeksPerRow * (baseSquareSize + baseGap) - baseGap);
+    const gridWidth = weeksPerRow * (baseSquareSize + baseGap) - baseGap;
+    const maxCanvasWidth = Math.min(containerWidth * 0.95, gridWidth);
+    const scale = maxCanvasWidth / gridWidth;
     const squareSize = Math.max(baseSquareSize * scale, 3);
     const gap = Math.max(baseGap * scale, 1);
     canvas.width = weeksPerRow * (squareSize + gap) - gap;
@@ -38,10 +41,10 @@ function initLifeGrid(config) {
       if (marco) {
         ctx.fillStyle = marco.cor;
         ctx.fillRect(x, y, squareSize, squareSize);
-      } else if (week < livedWeeks - 1) {
+      } else if (week < livedWeeks) {
         ctx.fillStyle = "#2a2a2a";
         ctx.fillRect(x, y, squareSize, squareSize);
-      } else if (week === livedWeeks - 1 && livedWeeks > 0) {
+      } else if (week === livedWeeks && livedWeeks < totalWeeks) {
         ctx.fillStyle = `rgba(42, 42, 42, ${opacity})`;
         ctx.fillRect(x, y, squareSize, squareSize);
       } else {

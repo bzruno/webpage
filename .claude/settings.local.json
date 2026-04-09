@@ -13,7 +13,20 @@
       "Bash(hugo --minify)",
       "Bash(sed 's/^[ \\\\t]*\\\\.//g')",
       "Bash(sed 's/class=\"//g')",
-      "Bash(sed 's/\"//g')"
+      "Bash(sed 's/\"//g')",
+      "Bash(ffmpeg -i \"C:/Users/BRNO/Documents/Hugo/Blog/static/images/88x31/speech.gif\" -loop 0 \"C:/Users/BRNO/Documents/Hugo/Blog/static/images/88x31/speech_loop.gif\")",
+      "Bash(gifsicle --version)",
+      "Bash(git -C \"C:/Users/BRNO/Documents/Hugo/Blog\" show HEAD:static/images/88x31/speech.gif)",
+      "Bash(python3:*)",
+      "Bash(python:*)",
+      "Bash(where node:*)",
+      "Bash(node:*)",
+      "Bash(sed 's/.*class=\"//')",
+      "Bash(sed 's/\".*//')",
+      "Bash(grep -v \"^$\")",
+      "Bash(grep -E \"^\\\\\\\\.[a-zA-Z0-9_-]+\\( |$|,|::\\)\" assets/css/style.css)",
+      "Bash(sed 's/ .*//')",
+      "Bash(find content/blog -name \"*.md\" -type f ! -name \"_index.md\" -exec grep -l \"categorias:\" {} \\\\;)"
     ]
   }
 }
