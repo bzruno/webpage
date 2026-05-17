@@ -49,7 +49,7 @@
   </div>
 </div>
 
-{{- $js := resources.Get "js/lifegrid.js" | fingerprint }}
+{{- $js := resources.Get "js/lifegrid.js" | minify | fingerprint }}
 <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
 <script>
   initLifeGrid({

@@ -3,17 +3,17 @@
    ========================================================================== */
 :root {
   /* Fundo */
-  --bg-0: #0c0c0c;
+  --bg-0: #040404;
   --bg-1: #141414;
   --bg-2: #242424;
-  --bg-3: #303030;
+  --bg-3: #343434;
 
   /* Bordas */
   --border: #e9dbc7;
 
   /* Texto */
   --text-1: #e9dbc7;
-  --text-2: #9a8e80;
+  --text-2: #ada59c;
 
   /* Acento */
   --accent: #fa774f;
@@ -106,6 +106,27 @@ article {
   border-radius: var(--r);
   padding: var(--s-8);
   margin: var(--s-4) 0;
+}
+
+/* ============================================================================
+   CARD ACCENT-LEFT (base compartilhada)
+   ========================================================================== */
+.breadcrumb,
+.meta,
+.toc,
+.series-nav,
+.artigos li,
+.series li,
+.projetos li {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+
+.meta,
+.toc {
+  border-left-width: 4px;
 }
 
 /* ============================================================================
@@ -253,10 +274,6 @@ header {
   font-size: 0.95rem;
   color: var(--text-2);
   margin-bottom: var(--s-6);
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-2) var(--s-4);
 }
 
@@ -282,10 +299,6 @@ header {
 
 .artigos li,
 .series li {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-4);
   margin: var(--s-4) 0;
   display: flex;
@@ -295,18 +308,24 @@ header {
 }
 
 .artigos li:hover,
-.series li:hover {
+.series li:hover,
+.projetos li:hover {
   background: var(--bg-3);
 }
 
 .artigos a,
-.series a {
+.series a,
+.categorias a,
+.series-nav a {
   font-weight: 500;
   color: var(--text-1);
 }
 
 .artigos a:hover,
-.series a:hover {
+.series a:hover,
+.categorias a:hover,
+.series-nav a:hover,
+.projetos-header a:hover {
   color: var(--link-hover);
   text-decoration: none;
 }
@@ -347,15 +366,6 @@ header {
   border-color: var(--accent);
 }
 
-.categorias a {
-  font-weight: 500;
-  color: var(--text-1);
-}
-
-.categorias a:hover {
-  color: var(--link-hover);
-  text-decoration: none;
-}
 
 .series small,
 .categorias small {
@@ -394,10 +404,6 @@ nav ul {
    META DO ARTIGO
    ========================================================================== */
 .meta {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-4) var(--s-6);
   margin: var(--s-8) 0;
   color: var(--text-2);
@@ -421,10 +427,6 @@ nav ul {
    TABLE OF CONTENTS
    ========================================================================== */
 .toc {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-4);
 }
 
@@ -477,10 +479,6 @@ nav ul {
    NAVEGAÇÃO DE SÉRIES
    ========================================================================== */
 .series-nav {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-6);
   margin: var(--s-8) 0;
 }
@@ -506,15 +504,6 @@ nav ul {
   color: var(--accent);
 }
 
-.series-nav a {
-  color: var(--text-1);
-  font-weight: 500;
-}
-
-.series-nav a:hover {
-  color: var(--link-hover);
-  text-decoration: none;
-}
 
 /* ============================================================================
    FOOTER DO POST
@@ -806,7 +795,8 @@ figure.img-figure figcaption {
     text-align: center;
   }
 
-  .artigos li {
+  .artigos li,
+  .series li {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--s-2);
@@ -835,18 +825,12 @@ figure.img-figure figcaption {
     margin: var(--s-4) 0;
   }
 
-  .toc nav#TableOfContents > ol {
+  .toc nav > ol {
     padding-left: var(--s-1);
   }
 
   .meta {
     padding: var(--s-3) var(--s-4);
-  }
-
-  .series li {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s-1);
   }
 
   .series-nav {
@@ -919,17 +903,9 @@ figure.img-figure figcaption {
 }
 
 .projetos li {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
   padding: var(--s-4);
   margin: var(--s-4) 0;
   transition: background 0.2s;
-}
-
-.projetos li:hover {
-  background: var(--bg-3);
 }
 
 .projetos-header {
@@ -942,11 +918,6 @@ figure.img-figure figcaption {
   font-weight: 600;
   color: var(--text-1);
   font-size: 1.05rem;
-}
-
-.projetos-header a:hover {
-  color: var(--link-hover);
-  text-decoration: none;
 }
 
 .projetos-status {

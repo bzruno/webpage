@@ -1,9 +1,9 @@
 {{- $src   := .Destination -}}
-{{- $alt   := .Text -}}
+{{- $alt   := .PlainText -}}
 {{- $title := .Title -}}
 {{- $page  := .Page -}}
 
-{{- $isExt := or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
+{{- $isExt := or (strings.HasPrefix $src "http://") (strings.HasPrefix $src "https://") -}}
 
 <figure class="img-figure">
   {{- if $isExt }}

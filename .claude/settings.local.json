@@ -26,7 +26,18 @@
       "Bash(grep -v \"^$\")",
       "Bash(grep -E \"^\\\\\\\\.[a-zA-Z0-9_-]+\\( |$|,|::\\)\" assets/css/style.css)",
       "Bash(sed 's/ .*//')",
-      "Bash(find content/blog -name \"*.md\" -type f ! -name \"_index.md\" -exec grep -l \"categorias:\" {} \\\\;)"
+      "Bash(find content/blog -name \"*.md\" -type f ! -name \"_index.md\" -exec grep -l \"categorias:\" {} \\\\;)",
+      "Bash(hugo version:*)",
+      "Bash(winget upgrade:*)",
+      "Bash(winget list:*)",
+      "Bash(where hugo:*)",
+      "Bash(choco upgrade:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:gohugo.io)",
+      "WebSearch",
+      "WebFetch(domain:discourse.gohugo.io)",
+      "Bash(hugo --source \"C:\\\\Users\\\\BRNO\\\\Documents\\\\Hugo\\\\Blog\")",
+      "Bash(hugo:*)"
     ]
   }
 }

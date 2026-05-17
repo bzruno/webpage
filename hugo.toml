@@ -1,6 +1,6 @@
 baseURL = 'https://bruno.moe/'
-languageCode = 'pt-br'
 defaultContentLanguage = 'pt-br'
+locale = 'pt-BR'
 title = 'Minha página'
 enableRobotsTXT = true
 
