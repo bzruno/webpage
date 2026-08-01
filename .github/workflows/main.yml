@@ -23,13 +23,16 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.145.0'
+          hugo-version: '0.164.0'
           extended: true
 
       - name: Build
         run: hugo --minify --gc
         env:
+          # O fuso agora está fixado em timeZone no hugo.toml; mantido aqui
+          # para que qualquer passo fora do Hugo veja o mesmo fuso.
           TZ: America/Sao_Paulo
+          HUGO_ENVIRONMENT: production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

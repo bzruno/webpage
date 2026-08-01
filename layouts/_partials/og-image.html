@@ -1,0 +1,41 @@
+{{/*
+  Resolve e processa a imagem Open Graph da página.
+
+  Ordem de precedência:
+    1. .Params.ogImage da própria página (recurso do bundle ou caminho em assets/)
+    2. params.ogImage do site (caminho em assets/)
+
+  Retorna um recurso de imagem com no máximo 1200px de largura, ou false
+  quando não houver imagem utilizável — o chamador trata com {{ with }}.
+
+  Formatos vetoriais e .ico são descartados: não passam pelo pipeline de
+  imagens do Hugo e não são aceitos como og:image pelas redes sociais.
+
+  Há um único return, no nível superior do template: é a forma recomendada
+  pela documentação e evita que algum caminho de execução caia fora dele.
+*/}}
+{{- $img := false -}}
+
+{{- with .Params.ogImage -}}
+  {{- $img = or ($.Resources.GetMatch .) (resources.Get .) -}}
+{{- end -}}
+
+{{- if not $img -}}
+  {{- with site.Params.ogImage -}}
+    {{- $img = resources.Get . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $out := false -}}
+{{- with $img -}}
+  {{- $processaveis := slice "png" "jpeg" "gif" "webp" "avif" "tiff" "bmp" -}}
+  {{- if and (eq .ResourceType "image") (in $processaveis .MediaType.SubType) -}}
+    {{- if gt .Width 1200 -}}
+      {{- $out = .Resize "1200x png" -}}
+    {{- else -}}
+      {{- $out = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $out -}}

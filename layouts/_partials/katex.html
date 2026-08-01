@@ -1,0 +1,38 @@
+{{/*
+  KaTeX — carregado apenas em páginas com "math: true" no front matter.
+
+  Os delimitadores abaixo espelham exatamente o que está configurado em
+  [markup.goldmark.extensions.passthrough.delimiters] no hugo.toml. Se um dos
+  dois lados mudar, o outro precisa mudar junto: o Goldmark só preserva o que
+  estiver declarado como passthrough, e o KaTeX só renderiza o que estiver
+  declarado aqui.
+
+  "$" simples ficou de fora de propósito — quebraria "R$ 10" no meio do texto.
+  Para fórmula em linha use \( ... \); para bloco, $$ ... $$ ou \[ ... \].
+
+  Hashes SRI conferidos contra os bytes publicados em cdn.jsdelivr.net.
+*/}}
+{{- $katexVersion := "0.18.1" -}}
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@{{ $katexVersion }}/dist/katex.min.css"
+      integrity="sha384-1vdNCNel6Tx/NQa8IR1mGOGKsbGreCkOPfbtPPnUURJ5Tu2PRVfQ/7KLZC+Pi1p1"
+      crossorigin="anonymous">
+
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@{{ $katexVersion }}/dist/katex.min.js"
+        integrity="sha384-ycJ6GAwiS15LoUPipwJOrWTvkUHl/YqELValBwI5I4awP1EeEQJYarj+w85ntcz7"
+        crossorigin="anonymous"></script>
+
+<script defer
+        src="https://cdn.jsdelivr.net/npm/katex@{{ $katexVersion }}/dist/contrib/auto-render.min.js"
+        integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz"
+        crossorigin="anonymous"
+        onload="renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$',  right: '$$',  display: true},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError: false
+        });"></script>

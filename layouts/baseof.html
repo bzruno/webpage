@@ -10,7 +10,9 @@
 
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
-  <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  {{/* Fonte via asset pipeline: com fingerprint para cache busting imutável */}}
+  {{- $font := resources.Get "fonts/JetBrainsMono-Regular.woff2" | fingerprint }}
+  <link rel="preload" href="{{ $font.RelPermalink }}" as="font" type="font/woff2" crossorigin>
 
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
@@ -18,7 +20,14 @@
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ site.Title }}">
-  {{- with site.Params.ogImage }}<meta property="og:image" content="{{ . | absURL }}">{{- end }}
+  {{/* .Language.LanguageCode saiu de cena no Hugo 0.158; hoje é .Language.Locale */}}
+  <meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
+  {{- with partial "og-image.html" . }}
+  <meta property="og:image" content="{{ .Permalink }}">
+  <meta property="og:image:width" content="{{ .Width }}">
+  <meta property="og:image:height" content="{{ .Height }}">
+  <meta name="twitter:card" content="summary_large_image">
+  {{- end }}
 
   <link rel="canonical" href="{{ .Permalink }}">
 
@@ -26,7 +35,10 @@
     {{ printf `<link rel="%s" type="%s" title="%s" href="%s">` .Rel .MediaType.Type site.Title .Permalink | safeHTML }}
   {{- end }}
 
-  {{ with resources.Get "css/style.css" | minify | fingerprint -}}
+  {{/* A folha de estilo é executada como template para receber a URL da fonte já com fingerprint */}}
+  {{ with resources.Get "css/style.css"
+      | resources.ExecuteAsTemplate "css/style.css" (dict "fontURL" $font.RelPermalink)
+      | minify | fingerprint -}}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{- end }}
 

@@ -1,0 +1,17 @@
+{{/*
+  Data no formato compacto DD-Mmm-AAAA (ex.: 01-Mai-2025).
+
+  Os nomes dos meses vêm do próprio Hugo via time.Format, que respeita o
+  locale = 'pt-BR' definido no hugo.toml — não há mais uma lista de meses
+  escrita à mão para manter em sincronia. Se um segundo idioma for adicionado
+  ao site, as datas passam a ser traduzidas sozinhas.
+
+  O Hugo devolve o mês abreviado em minúsculas e com ponto ("mai."); o replace
+  tira o ponto e o FirstUpper devolve a capitalização usada no layout.
+  Atenção: replace recebe (INPUT OLD NEW), por isso a chamada não é encadeada
+  com pipe — o pipe empurraria o valor para o último argumento.
+*/}}
+{{- if not .Date.IsZero -}}
+{{- $mes := strings.FirstUpper (replace (.Date | time.Format "Jan") "." "") -}}
+<time datetime="{{ .Date | time.Format "2006-01-02" }}">{{ .Date | time.Format "02" }}-{{ $mes }}-{{ .Date | time.Format "2006" }}</time>
+{{- end -}}

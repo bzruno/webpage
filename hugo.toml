@@ -4,9 +4,15 @@ locale = 'pt-BR'
 title = 'Minha página'
 enableRobotsTXT = true
 
+# Fixa o fuso do build: sem isso as datas dependem do TZ da máquina, e o site
+# renderiza diferente na sua máquina e no CI (que exporta TZ no workflow).
+timeZone = 'America/Sao_Paulo'
+
 [params]
   description = 'Minha página'
-  ogImage     = '/images/favicon.ico'
+  # Caminho relativo a assets/ — processado pelo pipeline de imagens.
+  # Um .ico não é aceito como og:image por nenhuma rede social.
+  ogImage     = 'images/og-base.png'
 
 [params.author]
   name = 'Bruno'
@@ -39,6 +45,30 @@ enableRobotsTXT = true
 
 [markup.goldmark.parser]
   wrapStandAloneImageWithinParagraph = false
+
+# Render hook embutido de links: resolve links markdown para páginas/recursos
+# e avisa no build quando o destino interno não existe.
+#
+# A chave antiga enableDefault foi removida no Hugo 0.148; hoje o ajuste é
+# useEmbedded, com 'never' | 'auto' | 'fallback' | 'always'. O padrão 'auto'
+# só liga o hook em sites multilíngues — ou seja, aqui ele ficaria desligado.
+# 'fallback' liga o hook embutido justamente por não existir hook próprio de
+# link neste projeto (o de imagem, esse sim, está em layouts/_markup/).
+[markup.goldmark.renderHooks.link]
+  useEmbedded = 'fallback'
+
+# Passthrough: entrega as fórmulas ao KaTeX sem o Goldmark interpretá-las.
+# Sem isso o Goldmark consome as barras invertidas e "\(x\)" chega ao navegador
+# como "(x)" — o KaTeX nunca acha o delimitador e a fórmula não renderiza.
+# Trechos como *a* ou _b_ dentro da fórmula também virariam itálico.
+# Delimitadores conforme a documentação do Hugo — "$" simples fica de fora
+# de propósito, para não quebrar valores monetários (R$ 10).
+[markup.goldmark.extensions.passthrough]
+  enable = true
+
+[markup.goldmark.extensions.passthrough.delimiters]
+  block  = [['\[', '\]'], ['$$', '$$']]
+  inline = [['\(', '\)']]
 
 [security]
   enableInlineShortcodes = true
