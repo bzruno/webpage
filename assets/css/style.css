@@ -223,7 +223,6 @@ hr {
 .series small,
 .categorias small,
 .projetos-status,
-.lifegrid-caption,
 .toc li::before {
   font-family: var(--font-mono);
   font-size: var(--fs-small);
@@ -246,11 +245,11 @@ hr {
   margin-left: var(--s-2);
 }
 
-/* Do tamanho do texto ao redor e na cor do h1. */
+/* Do tamanho do texto ao redor. */
 .icon {
   width: 1em;
   height: 1em;
-  color: var(--accent);
+  color: var(--text-1);
   vertical-align: -0.125em;
 }
 
@@ -716,10 +715,13 @@ math {
   border-radius: var(--r);
 }
 
+/* A monoespaçada é mais larga: mesma compensação do code. */
 .lifegrid-caption {
   margin-top: var(--s-4);
   padding-top: var(--s-4);
   border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: calc(var(--fs-small) * 0.875);
 }
 
 .lifegrid-legends {
