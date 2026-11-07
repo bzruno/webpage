@@ -25,6 +25,10 @@ E essa é minha página na World Wide Web. Aqui vou escrever sobre coisas que eu
 <a href="/projetos/">Projetos</a>
 </nav>
 
+## Últimos artigos
+
+{{< ultimos-artigos >}}
+
 ## Vida em semanas
 
 {{< lifegrid >}}
