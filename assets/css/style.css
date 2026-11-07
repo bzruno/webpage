@@ -24,6 +24,15 @@
   --link: #f5724a;
   --link-hover: #ff9070;
 
+  /* Escala de tamanhos. Tudo sai daqui: no celular basta redefinir estas
+     variáveis. --fs-small é o texto auxiliar: meta, navegação do rodapé,
+     legendas, breadcrumb, notas e datas. */
+  --fs-h1: 2rem;
+  --fs-h2: 1.35rem;
+  --fs-h3: 1.2rem;
+  --fs-body: 1.125rem;
+  --fs-small: 0.95rem;
+
   /* Fontes */
   --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
@@ -92,7 +101,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  font-size: 1.125rem;
+  font-size: var(--fs-body);
   line-height: 1.7;
   letter-spacing: 0.01em;
   color: var(--text-1);
@@ -127,7 +136,7 @@ body {
   border: 1px solid var(--accent);
   border-radius: var(--r);
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: var(--fs-small);
 }
 
 .skip-link:focus {
@@ -201,7 +210,7 @@ h6 {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: var(--fs-h1);
   text-align: center;
   border-bottom: 1px solid var(--accent);
   padding-bottom: var(--s-2);
@@ -211,7 +220,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.35rem;
+  font-size: var(--fs-h2);
   border-bottom: 1px solid var(--accent);
   padding-bottom: var(--s-1);
   margin-bottom: var(--s-2);
@@ -219,16 +228,16 @@ h2 {
 }
 
 h3 {
-  font-size: 1.1rem;
+  font-size: var(--fs-h3);
 }
 
 h4,
 h5 {
-  font-size: 1rem;
+  font-size: var(--fs-body);
 }
 
 h6 {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--text-2);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -328,7 +337,7 @@ header {
    BREADCRUMB
    ========================================================================== */
 .breadcrumb {
-  font-size: 0.95rem;
+  font-size: var(--fs-small);
   color: var(--text-2);
   margin-bottom: var(--s-6);
   padding: var(--s-2) var(--s-4);
@@ -390,7 +399,7 @@ header {
 .artigos time {
   color: var(--text-2);
   font-family: var(--font-mono);
-  font-size: 0.85em;
+  font-size: var(--fs-small);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -427,7 +436,7 @@ header {
 .categorias small {
   color: var(--text-2);
   font-family: var(--font-mono);
-  font-size: 0.875em;
+  font-size: var(--fs-small);
   margin-left: var(--s-2);
 }
 
@@ -467,6 +476,7 @@ main :is(ul, ol) :is(ul, ol) {
   margin: var(--s-8) 0;
   padding: var(--s-3) 0;
   border-block: 1px solid var(--bg-3);
+  font-size: var(--fs-small);
   color: var(--text-2);
 }
 
@@ -516,7 +526,7 @@ main :is(ul, ol) :is(ul, ol) {
   counter-increment: toc-item;
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.85em;
+  font-size: var(--fs-small);
   margin-right: var(--s-2);
 }
 
@@ -540,7 +550,6 @@ main :is(ul, ol) :is(ul, ol) {
   margin-top: 0;
   margin-bottom: var(--s-4);
   color: var(--accent);
-  font-size: 1.05rem;
 }
 
 .series-nav li {
@@ -574,7 +583,6 @@ main :is(ul, ol) :is(ul, ol) {
   margin-top: 0;
   margin-bottom: var(--s-2);
   color: var(--accent);
-  font-size: 1.05rem;
 }
 
 .related .artigos {
@@ -593,7 +601,7 @@ main :is(ul, ol) :is(ul, ol) {
 .post-footer nav {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
+  font-size: var(--fs-small);
 }
 
 .post-footer a {
@@ -747,11 +755,11 @@ figure.img-figure img {
 
 figure.img-figure figcaption {
   margin-top: var(--s-2);
-  font-size: 0.85em;
+  font-size: var(--fs-small);
   color: var(--text-2);
   text-align: center;
   font-style: italic;
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 .buttons {
@@ -771,7 +779,7 @@ figure.img-figure figcaption {
    FOOTNOTES
    ========================================================================== */
 .footnotes {
-  font-size: 0.85em;
+  font-size: var(--fs-small);
   color: var(--text-2);
   border-top: 1px solid var(--border);
   margin-top: var(--s-8);
@@ -814,10 +822,10 @@ figure.img-figure figcaption {
 }
 
 .lifegrid-caption {
-  font-size: 0.7em;
+  font-size: var(--fs-small);
   margin-top: var(--s-4);
   line-height: 1.6;
-  color: var(--text-1);
+  color: var(--text-2);
   text-align: center;
   padding-top: var(--s-4);
   border-top: 1px solid var(--border);
@@ -825,11 +833,9 @@ figure.img-figure figcaption {
 
 .lifegrid-stats {
   margin-bottom: var(--s-2);
-  font-family: var(--font-mono);
 }
 
 .lifegrid-legends {
-  font-size: 1.1em;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -879,29 +885,24 @@ math {
   margin: var(--s-6) 0;
 }
 
-.math-block math {
-  font-size: 1.2em;
-}
-
 /* ============================================================================
    RESPONSIVIDADE
    ========================================================================== */
 @media (max-width: 768px) {
+  :root {
+    --fs-h1: 1.6rem;
+    --fs-h2: 1.25rem;
+    --fs-h3: 1.1rem;
+    --fs-body: 1rem;
+    --fs-small: 0.875rem;
+  }
+
   body {
-    font-size: 1rem;
     padding: 0 var(--s-4);
   }
 
   main {
     padding: var(--s-4);
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
   }
 
   .main-menu {
@@ -910,7 +911,7 @@ math {
 
   .main-menu a {
     padding: var(--s-2);
-    font-size: 0.9em;
+    font-size: var(--fs-small);
   }
 
   .post-footer nav {
@@ -924,10 +925,6 @@ math {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--s-2);
-  }
-
-  .artigos time {
-    font-size: 0.8em;
   }
 
   .categorias {
@@ -959,12 +956,8 @@ math {
 }
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: 1.35rem;
-  }
-
-  .breadcrumb {
-    font-size: 0.8em;
+  :root {
+    --fs-h1: 1.35rem;
   }
 }
 
@@ -1037,20 +1030,19 @@ math {
 .projetos-header a {
   font-weight: 600;
   color: var(--text-1);
-  font-size: 1.05rem;
 }
 
 .projetos-status {
   color: var(--border);
   font-family: var(--font-mono);
-  font-size: 0.8em;
+  font-size: var(--fs-small);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .projetos-desc {
   color: var(--text-2);
-  font-size: 0.95em;
+  font-size: var(--fs-small);
   margin: var(--s-2) 0 0;
 }
 
