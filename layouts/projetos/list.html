@@ -2,15 +2,14 @@
 <main>
   <h1>Bem-vindo aos meus projetos</h1>
 
-  {{- $projetos := .Pages.ByDate.Reverse }}
   <ul class="projetos">
-    {{- range $projetos }}
+    {{- range .Pages.ByDate.Reverse }}
     <li>
       <div class="projetos-header">
-        {{- $href := .RelPermalink }}
-        {{- with .Params.link }}{{ $href = . }}{{ end }}
-        <a href="{{ $href }}"{{ with .Params.link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>
-        <span class="projetos-status">[{{ .Params.status }}]</span>
+        <a href="{{ or .Params.link .RelPermalink }}"{{ with .Params.link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>
+        {{- with .Params.status }}
+        <span class="projetos-status">[{{ . }}]</span>
+        {{- end }}
       </div>
       {{- with .Description }}
       <p class="projetos-desc">{{ . }}</p>

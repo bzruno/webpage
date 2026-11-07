@@ -90,6 +90,31 @@ body {
   color: var(--text-1);
 }
 
+/* ============================================================================
+   SKIP LINK — atalho de teclado para o conteúdo
+   ========================================================================== */
+/* Fica fora da tela até receber foco, então não aparece para quem usa mouse,
+   mas é o primeiro destino do Tab para quem navega por teclado. Não usa
+   display:none nem visibility:hidden: os dois tirariam o link da ordem de
+   foco, que é justamente o que ele precisa ocupar. */
+.skip-link {
+  position: absolute;
+  left: var(--s-4);
+  top: -100%;
+  z-index: 10;
+  padding: var(--s-2) var(--s-4);
+  background: var(--bg-2);
+  color: var(--text-1);
+  border: 1px solid var(--accent);
+  border-radius: var(--r);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.skip-link:focus {
+  top: var(--s-4);
+}
+
 hr {
   border: none;
   border-top: 1px solid var(--border);
@@ -99,8 +124,7 @@ hr {
 /* ============================================================================
    LAYOUT PRINCIPAL
    ========================================================================== */
-main,
-article {
+main {
   background: var(--bg-1);
   border: 1px solid var(--border);
   border-radius: var(--r);
@@ -142,6 +166,9 @@ h6 {
   color: var(--text-1);
   margin: var(--s-8) 0 var(--s-2);
   scroll-margin-top: var(--s-4);
+  /* Distribui um título de duas linhas em linhas de largura parecida, em vez
+     de deixar a segunda com uma palavra solta. */
+  text-wrap: balance;
 }
 
 h1,
@@ -192,6 +219,9 @@ h6 {
 
 p {
   margin-bottom: var(--s-6);
+  /* Impede a linha órfã de uma palavra só no fim do parágrafo. Navegador que
+     não conhece a propriedade simplesmente ignora e quebra como antes. */
+  text-wrap: pretty;
 }
 
 p:last-child {
@@ -330,8 +360,7 @@ header {
   text-decoration: none;
 }
 
-.artigos time,
-.series time {
+.artigos time {
   color: var(--text-2);
   font-family: var(--font-mono);
   font-size: 0.85em;
@@ -378,23 +407,22 @@ header {
 /* ============================================================================
    LISTAS (CONTEÚDO — MARKDOWN)
    ========================================================================== */
-:is(main, article) :is(ul, ol) {
+main :is(ul, ol) {
   margin: var(--s-4) 0 var(--s-6);
   padding-left: 1.75em;
 }
 
-:is(main, article) li {
+main li {
   margin: 0.4em 0;
   line-height: 1.6;
 }
 
-:is(main, article) :is(ul, ol) :is(ul, ol) {
+main :is(ul, ol) :is(ul, ol) {
   margin: var(--s-2) 0;
 }
 
-/* Evitar que padding do conteúdo afete nav e series-nav */
-.series-nav ul,
-nav ul {
+/* Evitar que padding do conteúdo afete a navegação da série */
+.series-nav ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
@@ -414,10 +442,6 @@ nav ul {
   margin: var(--s-2) 0;
 }
 
-.meta strong {
-  color: var(--text-1);
-}
-
 .meta a {
   color: var(--link);
   font-weight: 500;
@@ -428,6 +452,7 @@ nav ul {
    ========================================================================== */
 .toc {
   padding: var(--s-4);
+  margin-bottom: var(--s-6);
 }
 
 .toc h2 {
@@ -506,6 +531,29 @@ nav ul {
 
 
 /* ============================================================================
+   ARTIGOS RELACIONADOS
+   ========================================================================== */
+/* Sem fundo próprio de propósito: os <li> internos são .artigos, que já
+   recebem o cartão com a borda de acento. Um fundo aqui empilharia cartão
+   dentro de cartão. O separador no topo basta para destacar a seção. */
+.related {
+  margin: var(--s-8) 0;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
+}
+
+.related h3 {
+  margin-top: 0;
+  margin-bottom: var(--s-2);
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.related .artigos {
+  margin: var(--s-2) 0 0;
+}
+
+/* ============================================================================
    FOOTER DO POST
    ========================================================================== */
 .post-footer {
@@ -568,7 +616,40 @@ pre code {
   border: none;
   padding: 0;
   color: var(--text-1);
-  font-size: 0.875em;
+}
+
+/* ----------------------------------------------------------------------------
+   REALCE DE SINTAXE (Chroma)
+
+   As cores dos tokens vêm da folha gerada por css.ChromaStyles a partir do
+   style declarado em [markup.highlight] no hugo.toml — não são escritas aqui,
+   para não divergirem em silêncio se o style mudar.
+
+   O que este bloco faz é reencaixar o bloco realçado na paleta do site: o
+   tokyonight-night traz o próprio fundo (#1a1b26), e sem estas regras um bloco
+   com realce ficaria de um tom e um bloco sem realce de outro, lado a lado no
+   mesmo artigo.
+   -------------------------------------------------------------------------- */
+.chroma {
+  background-color: var(--bg-2);
+}
+
+/* O Hugo envolve o código realçado num <div class="highlight">; a margem passa
+   para ele para que o <pre> interno não some duas margens verticais. */
+.highlight {
+  margin: var(--s-6) 0;
+}
+
+.highlight pre.chroma {
+  margin: 0;
+}
+
+/* Números de linha não devem ser selecionáveis: copiar o bloco traria "1 2 3"
+   grudado em cada linha de código. */
+.chroma .lnt,
+.chroma .ln {
+  color: var(--text-2);
+  user-select: none;
 }
 
 /* ============================================================================
@@ -619,7 +700,7 @@ blockquote p:last-child {
 /* ============================================================================
    IMAGENS
    ========================================================================== */
-:is(main, article) img {
+main img {
   max-width: 100%;
   height: auto;
   display: block;
@@ -650,20 +731,12 @@ figure.img-figure figcaption {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--s-2);
+  gap: var(--s-6);
   margin: var(--s-6) 0;
-}
-
-.buttons figure.img-figure {
-  display: contents;
 }
 
 .buttons img {
   border-radius: 0;
-}
-
-.buttons figure.img-figure figcaption {
-  display: none;
 }
 
 /* ============================================================================
@@ -677,6 +750,11 @@ figure.img-figure figcaption {
   padding-top: var(--s-4);
 }
 
+/* O Goldmark abre as notas com um <hr>, que somaria uma segunda linha à borda. */
+.footnotes hr {
+  display: none;
+}
+
 /* ============================================================================
    FOOTER DO SITE
    ========================================================================== */
@@ -684,6 +762,10 @@ figure.img-figure figcaption {
   text-align: center;
   margin-top: var(--s-12);
   color: var(--text-2);
+}
+
+.site-footer img {
+  vertical-align: middle;
 }
 
 /* ============================================================================
@@ -744,19 +826,33 @@ figure.img-figure figcaption {
 }
 
 /* ============================================================================
-   KATEX — renderização de LaTeX
+   MATEMÁTICA — MathML gerado em tempo de build
+
+   As fórmulas não vêm mais do KaTeX no navegador: o render hook
+   layouts/_markup/render-passthrough.html as converte em MathML durante o
+   build. O MathML é renderizado pelo próprio navegador, então aqui só há
+   ajuste de tamanho, cor e rolagem — nenhuma folha de estilo externa.
+
+   O seletor é o próprio elemento <math>, não uma classe: o MathML é marcação
+   nativa. O transform.ToMath ainda envolve a saída num <span class="katex">
+   herdado da biblioteca, mas esse span não precisa de estilo nenhum aqui.
    ========================================================================== */
-.katex,
-.katex-display > .katex {
+math {
   font-size: 1.1em;
   color: var(--text-1);
 }
 
-.katex-display {
+/* Fórmula de bloco: rola na horizontal em tela estreita em vez de esticar o
+   artigo e criar rolagem horizontal na página inteira. */
+.math-block {
   overflow-x: auto;
   overflow-y: hidden;
   padding: var(--s-4) 0;
   margin: var(--s-6) 0;
+}
+
+.math-block math {
+  font-size: 1.2em;
 }
 
 /* ============================================================================
@@ -768,7 +864,7 @@ figure.img-figure figcaption {
     padding: 0 var(--s-4);
   }
 
-  :is(main, article) {
+  main {
     padding: var(--s-4);
   }
 
@@ -938,6 +1034,10 @@ figure.img-figure figcaption {
    ACESSIBILIDADE — MOVIMENTO REDUZIDO
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {

@@ -1,0 +1,116 @@
+{{/*
+  Dados estruturados schema.org em JSON-LD.
+
+  As meta tags Open Graph que já existem no baseof.html servem à pré-visualização
+  em redes sociais; elas não dizem a um buscador o que a página É. É por este
+  bloco que o Google distingue um artigo (com autor e data de publicação, apto a
+  aparecer como resultado rico) de uma página qualquer, e é daqui que ele lê a
+  trilha de navegação exibida acima do link no resultado da busca.
+
+  Tudo vai num único @graph em vez de vários <script> soltos: assim os nós se
+  referenciam por @id — o autor do artigo aponta para o mesmo nó Person do site,
+  em vez de repetir os dados do autor em cada página.
+
+  O JSON é montado como dict e passado por jsonify, nunca concatenado como
+  texto: o jsonify escapa aspas e acentos sozinho, então um título com aspas
+  não quebra o bloco inteiro.
+*/}}
+
+{{- $siteID   := printf "%s#site" site.Home.Permalink -}}
+{{- $authorID := printf "%s#author" site.Home.Permalink -}}
+
+{{/* Nós fixos do site, referenciados por @id pelos nós de página. */}}
+{{- $author := dict
+      "@type" "Person"
+      "@id"   $authorID
+      "name"  site.Params.author.name
+      "url"   site.Home.Permalink
+-}}
+
+{{- $website := dict
+      "@type"      "WebSite"
+      "@id"        $siteID
+      "url"        site.Home.Permalink
+      "name"       site.Title
+      "inLanguage" site.Language.Locale
+      "publisher"  (dict "@id" $authorID)
+-}}
+{{- with site.Params.description }}
+  {{- $website = merge $website (dict "description" .) }}
+{{- end }}
+
+{{- $graph := slice $author $website -}}
+
+{{/* ---------------------------------------------------------------------
+     Nó da página: BlogPosting para artigos, WebPage para o resto.
+     A home não ganha nó próprio — o WebSite acima já a representa.
+     --------------------------------------------------------------------- */}}
+{{- if not .IsHome }}
+  {{- $isArtigo := partial "is-artigo.html" . -}}
+
+  {{- $node := dict
+        "@type"            (cond $isArtigo "BlogPosting" "WebPage")
+        "@id"              .Permalink
+        "url"              .Permalink
+        "name"             .Title
+        "inLanguage"       site.Language.Locale
+        "isPartOf"         (dict "@id" $siteID)
+        "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  -}}
+
+  {{- with or .Description (.Summary | plainify | truncate 160) }}
+    {{- $node = merge $node (dict "description" (. | plainify | htmlUnescape)) }}
+  {{- end }}
+
+  {{- if $isArtigo }}
+    {{- $node = merge $node (dict "headline" (.Title | truncate 110) "author" (dict "@id" $authorID)) }}
+
+    {{/* Datas em ISO 8601 com fuso — o formato que o schema.org espera.
+         .Lastmod cai na data de publicação quando não há alteração. */}}
+    {{- if not .Date.IsZero }}
+      {{- $node = merge $node (dict
+            "datePublished" (.Date | time.Format "2006-01-02T15:04:05-07:00")
+            "dateModified"  (.Lastmod | time.Format "2006-01-02T15:04:05-07:00")) }}
+    {{- end }}
+
+    {{- with .GetTerms "categorias" }}
+      {{- $cats := slice }}
+      {{- range . }}{{ $cats = $cats | append .LinkTitle }}{{ end }}
+      {{- $node = merge $node (dict "keywords" (delimit $cats ", ")) }}
+    {{- end }}
+
+    {{- $node = merge $node (dict "wordCount" .WordCount) }}
+  {{- end }}
+
+  {{/* Reaproveita exatamente a imagem já resolvida para o Open Graph. */}}
+  {{- with partial "og-image.html" . }}
+    {{- $node = merge $node (dict "image" (dict
+          "@type"  "ImageObject"
+          "url"    .Permalink
+          "width"  .Width
+          "height" .Height)) }}
+  {{- end }}
+
+  {{- $graph = $graph | append $node }}
+
+  {{/* -------------------------------------------------------------------
+       Trilha de navegação: a mesma do <nav class="breadcrumb"> do layout.
+       ------------------------------------------------------------------- */}}
+  {{- $elements := slice }}
+  {{- range $i, $p := partial "breadcrumb-trail.html" . }}
+    {{- $elements = $elements | append (dict
+          "@type"    "ListItem"
+          "position" (add $i 1)
+          "name"     (cond $p.IsHome "Home" $p.LinkTitle)
+          "item"     $p.Permalink) }}
+  {{- end }}
+
+  {{- $graph = $graph | append (dict
+        "@type"           "BreadcrumbList"
+        "@id"             (printf "%s#breadcrumb" .Permalink)
+        "itemListElement" $elements) }}
+{{- end }}
+
+<script type="application/ld+json">
+{{ jsonify (dict "@context" "https://schema.org" "@graph" $graph) | safeJS }}
+</script>

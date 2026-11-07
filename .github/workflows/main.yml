@@ -3,6 +3,9 @@ name: Deploy Hugo
 on:
   push:
     branches: [main]
+  # Permite disparar o build à mão pela aba Actions, útil para republicar sem
+  # precisar de um commit vazio.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,29 +16,38 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  HUGO_VERSION: '0.169.0'
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.164.0'
+          hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
+      # --panicOnWarning transforma qualquer aviso do Hugo em erro de build.
+      # Sem isso, um recurso de imagem que sumiu ou uma função marcada como
+      # obsoleta numa atualização futura apenas imprimiria um aviso no log —
+      # que ninguém lê quando o job termina em verde — e o site iria ao ar
+      # quebrado. Com a flag, a atualização que introduzir a regressão falha
+      # aqui, antes de publicar.
       - name: Build
-        run: hugo --minify --gc
+        run: hugo --minify --gc --panicOnWarning
         env:
-          # O fuso agora está fixado em timeZone no hugo.toml; mantido aqui
-          # para que qualquer passo fora do Hugo veja o mesmo fuso.
+          # O timeZone do hugo.toml vale para as datas do conteúdo, mas não para
+          # a função now, que usa o relógio da máquina: sem isto o "Última
+          # atualização" do lifegrid sairia em UTC.
           TZ: America/Sao_Paulo
-          HUGO_ENVIRONMENT: production
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
 
@@ -48,4 +60,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

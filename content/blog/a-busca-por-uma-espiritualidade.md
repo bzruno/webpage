@@ -2,10 +2,10 @@
 title: "A busca por uma espiritualidade"
 subtitle: "Formulando meus pensamentos a cerca de Deus"
 date: 2026-05-17
+lastmod: 2026-09-06
 draft: false
 categorias: ["Teologia"]
 toc: true
-math: true
 ---
 
 ## O que é o Deísmo?

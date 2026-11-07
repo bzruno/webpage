@@ -1,0 +1,43 @@
+{{/*
+  Render hook de passthrough — renderiza LaTeX em tempo de BUILD.
+
+  Antes deste arquivo o site baixava três recursos do cdn.jsdelivr.net em toda
+  página com "math: true" (katex.min.css, katex.min.js e auto-render.min.js,
+  ~300 KB) só para o navegador converter as fórmulas depois que a página já
+  tinha pintado. Isso custava três conexões a um terceiro, um salto visível de
+  layout quando o KaTeX trocava o texto cru pela fórmula, três hashes SRI para
+  manter à mão a cada atualização de versão, e nada funcionava sem JavaScript.
+
+  transform.ToMath faz a mesma conversão aqui, durante o build, com o KaTeX
+  que já vem compilado dentro do binário do Hugo. O HTML publicado sai com a
+  fórmula pronta.
+
+  output "mathml" é intencional: MathML é nativo em todos os navegadores atuais
+  (Chrome desde a 109, Firefox e Safari há muito mais tempo), então a fórmula
+  renderiza com ZERO byte de CSS, JavaScript ou fonte externa. As outras opções
+  ("html" e "htmlAndMathml") produzem a marcação do KaTeX, que voltaria a exigir
+  o katex.min.css e a família de fontes KaTeX_* do CDN — exatamente o que este
+  arquivo existe para eliminar.
+
+  Os delimitadores continuam definidos em um lugar só, no hugo.toml, em
+  [markup.goldmark.extensions.passthrough.delimiters]: o Goldmark entrega aqui
+  apenas o que estiver declarado lá. Não há mais uma segunda lista de
+  delimitadores em JavaScript para manter em sincronia.
+
+  .Type é "block" para $$...$$ e \[...\], e "inline" para \(...\).
+*/}}
+{{- $opts := dict "output" "mathml" "displayMode" (eq .Type "block") -}}
+
+{{- with try (transform.ToMath .Inner $opts) -}}
+  {{- with .Err -}}
+    {{- errorf "render-passthrough: fórmula inválida em %s: %s" $.Position . -}}
+  {{- else with .Value -}}
+    {{- if eq $.Type "block" -}}
+      {{/* O wrapper dá rolagem horizontal às fórmulas largas em telas
+           estreitas; sem ele o MathML estoura a largura do artigo. */}}
+      <div class="math-block">{{ . }}</div>
+    {{- else -}}
+      {{- . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

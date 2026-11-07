@@ -1,0 +1,7 @@
+{{/*
+  Diz se a página é um artigo do blog.
+
+  Só a seção não basta: content/blog/artigos.md também é uma página regular da
+  seção blog, mas é o índice de artigos (layout "artigos"), não um artigo.
+*/}}
+{{- return and .IsPage (eq .Section "blog") (ne .Layout "artigos") -}}

@@ -1,31 +1,26 @@
 {{- define "main" }}
+<main>
 <article>
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/">Home</a>
-    {{- range .Ancestors.Reverse }}
-      {{- if not .IsHome }}
-        / <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-      {{- end }}
-    {{- end }}
-    {{- if eq .Section "blog" }}
-      {{- with site.GetPage "/blog/artigos" }}
-        / <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-      {{- end }}
-    {{- end }}
-    / <span aria-current="page">{{ .LinkTitle }}</span>
-  </nav>
+  {{- partial "breadcrumb.html" . }}
 
   <header>
     <h1>{{ .Title }}</h1>
     {{- with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{- end }}
     <div class="meta">
-      <div class="taxonomy-date">
+      <div>
         📅
         {{ partial "date.html" . }}
+        {{/* .ReadingTime é calculado pelo Hugo a partir da contagem de
+             palavras do conteúdo já renderizado; nunca fica desatualizado
+             como ficaria um número escrito no front matter. Sai só em
+             artigos, onde a estimativa tem serventia. */}}
+        {{- if eq .Section "blog" }}
+          · ⏱️ {{ .ReadingTime }} min de leitura
+        {{- end }}
       </div>
 
       {{- with .GetTerms "categorias" }}
-        <div class="taxonomy-categories">
+        <div>
           Categorias:
           {{- range $i, $term := . }}
             {{- if $i }}, {{ end }}
@@ -35,7 +30,7 @@
       {{- end }}
 
       {{- with .GetTerms "series" }}
-        <div class="taxonomy-series">
+        <div>
           Série:
           {{- range $i, $term := . }}
             {{- if $i }}, {{ end }}
@@ -46,7 +41,7 @@
     </div>
   </header>
 
-  {{- if and .Params.toc (gt (len .TableOfContents) 50) }}
+  {{- if and .Params.toc .Fragments.HeadingsMap }}
     <aside class="toc">
       <h2>📑 Sumário</h2>
       {{ .TableOfContents }}
@@ -62,16 +57,38 @@
       <aside class="series-nav">
         <h3>Mais de {{ .LinkTitle }}</h3>
         <ul>
-          {{- range .Pages }}
-          <li{{ if eq .Permalink $.Permalink }} class="active"{{ end }}>
-            {{- if eq .Permalink $.Permalink }}
-              <span>{{ .LinkTitle }}{{ with .Params.part }} (Parte {{ . }}){{ end }}</span>
+          {{- range .Pages.ByParam "part" }}
+          {{- $atual := eq .Permalink $.Permalink }}
+          <li{{ if $atual }} class="active"{{ end }}>
+            {{- if $atual }}
+              <span>{{ .LinkTitle }}</span>
             {{- else }}
-              <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ with .Params.part }} (Parte {{ . }}){{ end }}
+              <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
             {{- end }}
+            {{- with .Params.part }} (Parte {{ . }}){{ end }}
           </li>
           {{- end }}
         </ul>
+      </aside>
+    {{- end }}
+  {{- end }}
+
+  {{/*
+    Artigos relacionados.
+
+    A lista vem do índice configurado em [related] no hugo.toml, que pontua os
+    artigos por categoria, série e proximidade de data — não é um "últimos
+    três" disfarçado. O .Related já exclui a própria página do resultado.
+
+    Restrito à seção blog para que um projeto não apareça como leitura
+    relacionada de um artigo. Enquanto não houver artigos parecidos o bastante
+    para passar do threshold, o {{ with }} simplesmente não imprime nada.
+  */}}
+  {{- if eq .Section "blog" }}
+    {{- with (where site.RegularPages "Section" "blog").Related . | first 3 }}
+      <aside class="related">
+        <h3>Leia também</h3>
+        {{- partial "artigos-lista.html" . }}
       </aside>
     {{- end }}
   {{- end }}
@@ -95,4 +112,5 @@
   </footer>
 
 </article>
+</main>
 {{- end }}

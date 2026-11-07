@@ -8,6 +8,12 @@ enableRobotsTXT = true
 # renderiza diferente na sua máquina e no CI (que exporta TZ no workflow).
 timeZone = 'America/Sao_Paulo'
 
+# Falha cedo, com mensagem clara, se o site for compilado com um Hugo mais
+# antigo que o do CI (.github/workflows/main.yml) — sem isto o erro seria uma
+# função "inexistente" no meio de um template.
+[module.hugoVersion]
+  min = '0.169.0'
+
 [params]
   description = 'Minha página'
   # Caminho relativo a assets/ — processado pelo pipeline de imagens.
@@ -40,6 +46,42 @@ timeZone = 'America/Sao_Paulo'
   endLevel   = 4
   ordered    = true
 
+# Realce de sintaxe por classes CSS em vez de style="" inline em cada token.
+# Com noClasses = true (o padrão) o Chroma escreve as cores direto no HTML:
+# a página engorda, o cache não ajuda em nada e a folha gerada por
+# css.ChromaStyles não teria efeito algum. Com false, o HTML sai só com
+# classes e as cores vêm da folha de estilo — que o baseof.html gera em
+# tempo de build e concatena no bundle CSS, sem requisição extra.
+#
+# O estilo tokyonight-night usa a mesma paleta dos marcos do lifegrid
+# (#7aa2f7, #9ece6a, #f7768e, #e0af68), então o bloco de código combina
+# com o resto do site em vez de destoar.
+[markup.highlight]
+  noClasses = false
+  style     = 'tokyonight-night'
+  tabWidth  = 2
+
+# Conteúdo relacionado: o Hugo indexa os artigos por estes parâmetros e o
+# single.html consulta esse índice. Sem o bloco [related] o Hugo usa um
+# padrão que só considera keywords + date — parâmetros que este site não
+# usa, o que devolveria uma lista sempre vazia.
+[related]
+  includeNewer = true
+  threshold    = 60
+  toLower      = true
+
+  [[related.indices]]
+    name   = 'categorias'
+    weight = 100
+
+  [[related.indices]]
+    name   = 'series'
+    weight = 80
+
+  [[related.indices]]
+    name   = 'date'
+    weight = 10
+
 [markup.goldmark.renderer]
   unsafe = true
 
@@ -70,12 +112,6 @@ timeZone = 'America/Sao_Paulo'
   block  = [['\[', '\]'], ['$$', '$$']]
   inline = [['\(', '\)']]
 
-[security]
-  enableInlineShortcodes = true
-
-[security.funcs]
-  getenv = ['^HUGO_', '^CI$']
-
 [[menus.main]]
   name    = 'Home'
   pageRef = '/'
@@ -93,12 +129,12 @@ timeZone = 'America/Sao_Paulo'
 
 [[menus.main]]
   name    = 'Categorias'
-  url     = '/blog/categorias/'
+  pageRef = '/categorias'
   weight  = 40
 
 [[menus.main]]
   name    = 'Séries'
-  url     = '/blog/series/'
+  pageRef = '/series'
   weight  = 50
 
 [[menus.projetos]]
@@ -128,10 +164,10 @@ timeZone = 'America/Sao_Paulo'
 
 [[menus.blog]]
   name    = 'Categorias'
-  url     = '/blog/categorias/'
+  pageRef = '/categorias'
   weight  = 30
 
 [[menus.blog]]
   name    = 'Séries'
-  url     = '/blog/series/'
+  pageRef = '/series'
   weight  = 40

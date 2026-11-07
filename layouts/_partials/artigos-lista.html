@@ -1,0 +1,11 @@
+{{/* Lista de artigos com data. Recebe a coleção já ordenada. */}}
+<ul class="artigos">
+  {{- range . }}
+  <li>
+    {{- partial "date.html" . }}
+    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+  </li>
+  {{- else }}
+  <li>Nenhum artigo encontrado.</li>
+  {{- end }}
+</ul>

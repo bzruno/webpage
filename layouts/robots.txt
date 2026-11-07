@@ -1,0 +1,24 @@
+{{/*
+  robots.txt do site.
+
+  O template embutido do Hugo produz apenas "User-agent: *" — sem a linha
+  Sitemap. O sitemap.xml é gerado a cada build e lista todas as páginas com
+  data de modificação, mas nenhum buscador sabe que ele existe se ninguém
+  apontar o caminho: só é encontrado por acaso, ao rastrear links. A diretiva
+  Sitemap abaixo é a forma padrão de anunciá-lo.
+
+  O caminho é escrito à mão em vez de vir de site.Home.OutputFormats.Get
+  "sitemap": o sitemap não é um formato de saída da home (a home publica só
+  html e rss), o Hugo o gera à parte, no nível do site. O acessador devolveria
+  nulo e a linha sumiria em silêncio.
+
+  "sitemap.xml" é o nome padrão do Hugo. Se um dia for trocado por
+  [sitemap] filename no hugo.toml, esta linha precisa acompanhar.
+
+  absURL — e não relURL — porque a especificação do robots.txt exige URL
+  absoluta nesta diretiva.
+*/ -}}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}

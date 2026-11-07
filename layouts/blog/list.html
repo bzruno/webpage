@@ -1,26 +1,13 @@
 {{- define "main" }}
 <main>
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/">Home</a>
-    / <span aria-current="page">{{ .LinkTitle }}</span>
-  </nav>
+  {{- partial "breadcrumb.html" . }}
 
   <h1>Bem-vindo ao meu blog</h1>
 
-  {{- with .Content }}{{ . }}{{ end }}
+  {{- .Content }}
 
   <h2>Artigos</h2>
-  {{- $pages := .Pages.ByDate.Reverse | first 10 }}
-  <ul class="artigos">
-    {{- range $pages }}
-    <li>
-      {{- partial "date.html" . }}
-      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-    </li>
-    {{- else }}
-    <li>Nenhum artigo encontrado.</li>
-    {{- end }}
-  </ul>
+  {{- partial "artigos-lista.html" (.Pages.ByDate.Reverse | first 10) }}
 
   <h2>Categorias</h2>
   {{- with site.Taxonomies.categorias }}

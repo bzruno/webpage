@@ -1,39 +1,90 @@
-{{- $src   := .Destination -}}
-{{- $alt   := .PlainText -}}
-{{- $title := .Title -}}
-{{- $page  := .Page -}}
+{{/*
+  Render hook de imagem.
 
-{{- $isExt := or (strings.HasPrefix $src "http://") (strings.HasPrefix $src "https://") -}}
+  Para imagens que são recursos do bundle da página, o hook entrega <picture>
+  com WebP e srcset em vez de um único <img> no tamanho original: o navegador
+  escolhe a menor variante que serve, em vez de baixar uma foto de 2400px para
+  exibi-la com 400px num celular.
 
-<figure class="img-figure">
-  {{- if $isExt }}
-  <img
-    src="{{ $src }}"
-    alt="{{ $alt }}"
-    loading="lazy"
-    decoding="async"
-  >
+  width e height vão no <img> para reservar o espaço antes do download e evitar
+  que o texto pule quando a imagem chega.
+
+  Não são processadas:
+    - imagens externas (http/https): não passam pelo pipeline do Hugo;
+    - GIF: redimensionar um GIF animado descarta a animação (é o caso dos
+      botões 88x31 do site);
+    - SVG: é vetorial, já escala sozinho e não tem .Width/.Height utilizáveis.
+
+  Só a imagem sozinha num parágrafo (.IsBlock) vira <figure>: no meio de um texto
+  o pai é um <p>, que não pode conter <figure>. Atenção: uma imagem sozinha dentro
+  de um link também conta como .IsBlock e sairia <p><a><figure>, HTML inválido —
+  para imagem com link, escreva o <a><img> direto, como nos botões da home.
+*/}}
+
+{{- $url := urls.Parse .Destination -}}
+{{- $res := false -}}
+{{- if not $url.IsAbs }}
+  {{- $res = .PageInner.Resources.Get $url.Path -}}
+{{- end }}
+
+{{- $src := .Destination -}}
+{{- $width := 0 -}}
+{{- $height := 0 -}}
+{{- $srcsetWebp := "" -}}
+{{- $srcset := "" -}}
+{{/* sizes espelha o CSS: figure.img-figure tem max-width 400px, e abaixo disso a
+     imagem ocupa a largura disponível. Sem sizes o navegador assumiria 100vw e
+     baixaria uma variante maior que o necessário. */}}
+{{- $sizes := "(max-width: 440px) 100vw, 400px" -}}
+
+{{- with $res }}
+  {{- $formato := .MediaType.SubType -}}
+  {{- if and (eq .ResourceType "image") (in (slice "png" "jpeg" "webp" "tiff" "bmp") $formato) }}
+    {{/* Larguras candidatas, sem nunca ampliar acima do original: ampliar só
+         geraria um arquivo maior e mais borrado que a fonte. */}}
+    {{- $larguras := slice }}
+    {{- range (slice 400 800 1200) }}
+      {{- if le . $res.Width }}{{ $larguras = $larguras | append . }}{{ end }}
+    {{- end }}
+
+    {{/* Acrescenta a largura original quando ela cai entre dois degraus — por
+         exemplo um original de 500px, que sozinho geraria só a variante de
+         400w. Numa tela de densidade dupla o navegador pediria 800w, não
+         acharia, e ficaria com os 400w, mais borrados que a própria fonte.
+         O limite de 1200 evita anexar um 2400w que ninguém vai usar. */}}
+    {{- if and (le .Width 1200) (not (in $larguras .Width)) }}
+      {{- $larguras = $larguras | append .Width | sort }}
+    {{- end }}
+
+    {{- $webp := slice }}
+    {{- $orig := slice }}
+    {{- range $larguras }}
+      {{- $webp = $webp | append (printf "%s %dw" ($res.Resize (printf "%dx webp q80" .)).RelPermalink .) }}
+      {{- $orig = $orig | append (printf "%s %dw" ($res.Resize (printf "%dx" .)).RelPermalink .) }}
+    {{- end }}
+    {{- $srcsetWebp = delimit $webp ", " }}
+    {{- $srcset = delimit $orig ", " }}
+
+    {{- with $res.Resize (printf "%dx" (index $larguras (sub (len $larguras) 1))) }}
+      {{- $src = .RelPermalink }}
+      {{- $width = .Width }}
+      {{- $height = .Height }}
+    {{- end }}
   {{- else }}
-    {{- $res := $page.Resources.GetMatch $src -}}
-    {{- if $res }}
-  <img
-    src="{{ $res.RelPermalink }}"
-    alt="{{ $alt }}"
-    width="{{ $res.Width }}"
-    height="{{ $res.Height }}"
-    loading="lazy"
-    decoding="async"
-  >
-    {{- else }}
-  <img
-    src="{{ $src }}"
-    alt="{{ $alt }}"
-    loading="lazy"
-    decoding="async"
-  >
+    {{- $src = .RelPermalink }}
+    {{/* .Width e .Height não existem em SVG: lê-los aborta o build. */}}
+    {{- if eq $formato "gif" }}
+      {{- $width = .Width }}
+      {{- $height = .Height }}
     {{- end }}
   {{- end }}
-  {{- with $title }}
-  <figcaption>{{ . }}</figcaption>
-  {{- end }}
-</figure>
+{{- end }}
+
+{{- if .IsBlock }}<figure class="img-figure">{{ end -}}
+{{- with $srcsetWebp }}<picture><source type="image/webp" srcset="{{ . }}" sizes="{{ $sizes }}">{{ end -}}
+<img src="{{ $src }}"
+  {{- with $srcset }} srcset="{{ . }}" sizes="{{ $sizes }}"{{ end }} alt="{{ .PlainText }}"
+  {{- with $width }} width="{{ . }}" height="{{ $height }}"{{ end }}
+  {{- if not .IsBlock }}{{ with .Title }} title="{{ . }}"{{ end }}{{ end }} loading="lazy" decoding="async">
+{{- with $srcsetWebp }}</picture>{{ end -}}
+{{- if .IsBlock }}{{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end -}}

@@ -9,7 +9,8 @@
   (dict "data" (time "2021-12-10") "nome" "Primeira formação acadêmica" "cor" "#5aa9e6")
 }}
 
-{{- $totalSecs  := sub (time (printf "%d-05-01" (add $birthDate.Year (int site.Params.lifegrid.lifeExpectancy)))).Unix $birthDate.Unix }}
+{{- $fim        := $birthDate.AddDate (int site.Params.lifegrid.lifeExpectancy) 0 0 }}
+{{- $totalSecs  := sub $fim.Unix $birthDate.Unix }}
 {{- $totalWeeks := div $totalSecs 604800 }}
 {{- $livedSecs  := sub $now.Unix $birthDate.Unix }}
 {{- $livedWeeks := div $livedSecs 604800 }}
@@ -30,7 +31,7 @@
 {{- end }}
 
 <div class="lifegrid-container">
-  <canvas id="lifeGrid">Seu navegador não suporta canvas. Atualize-o para visualizar a grade de vida.</canvas>
+  <canvas id="lifeGrid" role="img" aria-label="Grade da vida em semanas: {{ $livedWeeks }} vividas de {{ $totalWeeks }}.">Seu navegador não suporta canvas. Atualize-o para visualizar a grade de vida.</canvas>
   <div class="lifegrid-caption">
     <div class="lifegrid-stats">
       Idade: {{ printf "%.1f" $idadeAnos }} anos |

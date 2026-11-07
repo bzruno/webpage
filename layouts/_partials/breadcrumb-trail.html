@@ -1,0 +1,34 @@
+{{/*
+  Trilha de navegação: lista de páginas, da home até a página atual.
+
+  Fonte única para a trilha visível (breadcrumb.html) e para a BreadcrumbList do
+  JSON-LD (schema.html), que assim não têm como divergir.
+
+  Duas paradas não saem de .Ancestors e são acrescentadas à mão:
+    - "Blog" nas taxonomias: categorias e séries são publicadas sob /blog/ pelo
+      [permalinks], mas no conteúdo ficam fora da seção blog;
+    - "Artigos" nos artigos: é uma página irmã (content/blog/artigos.md), não um
+      ancestral.
+*/}}
+{{- $trail := slice site.Home -}}
+
+{{- if in (slice "categorias" "series") .Section -}}
+  {{- with site.GetPage "/blog" -}}
+    {{- $trail = $trail | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- range .Ancestors.Reverse -}}
+  {{- if not .IsHome -}}
+    {{- $trail = $trail | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if partial "is-artigo.html" . -}}
+  {{- with site.GetPage "/blog/artigos" -}}
+    {{- $trail = $trail | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $trail = $trail | append . -}}
+{{- return $trail -}}

@@ -10,6 +10,18 @@
 
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
+  {{/*
+    color-scheme avisa o navegador que a página é escura, e ele passa a pintar
+    de escuro o que NÃO vem do style.css: barras de rolagem, campos de
+    formulário, o fundo entre a pintura inicial e a chegada do CSS. Sem isso o
+    site escuro pisca branco no carregamento e ganha uma barra de rolagem clara.
+
+    theme-color pinta a barra do navegador no Android e no Safari com o mesmo
+    preto do fundo, em vez do cinza padrão.
+  */}}
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#040404">
+
   {{/* Fonte via asset pipeline: com fingerprint para cache busting imutável */}}
   {{- $font := resources.Get "fonts/JetBrainsMono-Regular.woff2" | fingerprint }}
   <link rel="preload" href="{{ $font.RelPermalink }}" as="font" type="font/woff2" crossorigin>
@@ -20,7 +32,6 @@
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ site.Title }}">
-  {{/* .Language.LanguageCode saiu de cena no Hugo 0.158; hoje é .Language.Locale */}}
   <meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
   {{- with partial "og-image.html" . }}
   <meta property="og:image" content="{{ .Permalink }}">
@@ -31,42 +42,69 @@
 
   <link rel="canonical" href="{{ .Permalink }}">
 
-  {{ range .AlternativeOutputFormats -}}
-    {{ printf `<link rel="%s" type="%s" title="%s" href="%s">` .Rel .MediaType.Type site.Title .Permalink | safeHTML }}
+  {{- range .AlternativeOutputFormats }}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" title="{{ site.Title }}" href="{{ .Permalink }}">
   {{- end }}
 
-  {{/* A folha de estilo é executada como template para receber a URL da fonte já com fingerprint */}}
-  {{ with resources.Get "css/style.css"
-      | resources.ExecuteAsTemplate "css/style.css" (dict "fontURL" $font.RelPermalink)
-      | minify | fingerprint -}}
+  {{/*
+    Bundle CSS: realce de sintaxe + folha do site, em UM arquivo.
+
+    css.ChromaStyles gera as cores do Chroma a partir
+    do style declarado em [markup.highlight] no hugo.toml, em vez de manter uma
+    cópia dessas centenas de regras versionada aqui e desatualizando em silêncio.
+
+    O resources.Concat junta as duas folhas antes do minify e do fingerprint,
+    então o realce de código não custa uma segunda requisição — e o hash do
+    bundle muda sozinho se o style do Chroma mudar no hugo.toml.
+
+    A ordem importa: o Chroma vem primeiro para que os ajustes de .chroma no
+    style.css (que reencaixam o bloco de código na paleta do site) venham
+    depois e vençam, sem precisar de !important.
+
+    style.css é executado como template para receber a URL da fonte já com
+    fingerprint.
+  */}}
+  {{- $chroma := css.ChromaStyles (dict "targetPath" "css/chroma.css" "omitClassComments" true) }}
+  {{- $style := resources.Get "css/style.css"
+      | resources.ExecuteAsTemplate "css/style.css" (dict "fontURL" $font.RelPermalink) }}
+  {{ with slice $chroma $style | resources.Concat "css/bundle.css" | minify | fingerprint -}}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{- end }}
 
-  {{/* KaTeX — carregado apenas em páginas com math: true */}}
-  {{ if .Params.math }}
-    {{ partial "katex.html" . }}
-  {{ end }}
+  {{/* Dados estruturados schema.org para buscadores (JSON-LD) */}}
+  {{- partial "schema.html" . }}
 
   {{- block "head-extra" . }}{{- end }}
 </head>
 <body>
+  {{/*
+    Link de pular navegação: invisível até receber foco pelo teclado. Quem
+    navega por Tab ou leitor de tela chegaria antes em todos os itens do menu,
+    em toda página, antes de alcançar o texto. Este é o primeiro elemento
+    focável do documento justamente para oferecer o atalho.
+  */}}
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
   {{- if not .IsHome }}
-  {{- $isBlogDomain := or (eq .Section "blog") (in (slice "series" "categorias") .Data.Plural) }}
-  {{- $menuName := cond $isBlogDomain "blog" (cond (eq .Section "projetos") "projetos" "main") }}
-  {{- $menu := index site.Menus $menuName }}
-  {{- with $menu }}
+  {{- $menuName := "main" }}
+  {{- if in (slice "blog" "categorias" "series") .Section }}
+    {{- $menuName = "blog" }}
+  {{- else if eq .Section "projetos" }}
+    {{- $menuName = "projetos" }}
+  {{- end }}
+  {{- with index site.Menus $menuName }}
   {{- $cur := $.RelPermalink }}
+  {{- $blogURL := (site.GetPage "/blog").RelPermalink }}
   <header>
     <nav class="main-menu">
       {{- range . }}
       {{- $u := .URL }}
-      {{- $active := false }}
-      {{- if eq $u "/" }}
-        {{- $active = $.IsHome }}
-      {{- else if and (eq $menuName "blog") (eq $u (site.GetPage "/blog").RelPermalink) }}
-        {{- $active = eq $cur (site.GetPage "/blog").RelPermalink }}
-      {{- else }}
-        {{- $active = strings.HasPrefix $cur $u }}
+      {{/* Este cabeçalho não existe na home, então "/" nunca está ativo. No menu
+           do blog, "Blog" só acende na própria página: por prefixo ele acenderia
+           junto com Artigos, Categorias e Séries, que vivem sob /blog/. */}}
+      {{- $active := and (ne $u "/") (strings.HasPrefix $cur $u) }}
+      {{- if and (eq $menuName "blog") (eq $u $blogURL) }}
+        {{- $active = eq $cur $u }}
       {{- end }}
       <a href="{{ $u }}"{{ if $active }} class="active"{{ end }}>{{ .Name }}</a>
       {{- end }}
@@ -75,11 +113,14 @@
   {{- end }}
   {{- end }}
 
-  {{- block "main" . }}{{- end }}
+  {{/* Alvo do skip-link. O div não tem estilo próprio: só carrega o id. */}}
+  <div id="conteudo">
+    {{- block "main" . }}{{- end }}
+  </div>
 
   {{- if .IsHome }}
   <footer class="site-footer">
-    <p>Powered by <a href="https://gohugo.io/"><img src="/images/hugo.svg" alt="Hugo" height="20" style="vertical-align:middle"></a></p>
+    <p>Powered by <a href="https://gohugo.io/"><img src="/images/hugo.svg" alt="Hugo" width="73" height="20"></a></p>
   </footer>
   {{- end }}
 

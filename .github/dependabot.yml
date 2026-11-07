@@ -1,0 +1,17 @@
+# As actions do workflow tinham ficado três, dois e um major para trás
+# (checkout v4 enquanto a v7 já existia, upload-pages-artifact v3 com a v5
+# publicada). Nada avisa quando isso acontece: o build continua verde numa
+# versão antiga até o GitHub aposentá-la e o deploy quebrar sem aviso.
+#
+# Com este arquivo o Dependabot abre um PR quando sai versão nova, e a
+# atualização vira uma decisão, não uma descoberta no dia da falha.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci
+    labels:
+      - dependências

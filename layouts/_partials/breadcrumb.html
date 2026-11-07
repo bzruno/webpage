@@ -1,0 +1,13 @@
+{{- $trail := partial "breadcrumb-trail.html" . -}}
+{{- $last := sub (len $trail) 1 -}}
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  {{- range $i, $p := $trail }}
+    {{- if $i }} / {{ end }}
+    {{- $name := cond $p.IsHome "Home" $p.LinkTitle }}
+    {{- if eq $i $last }}
+    <span aria-current="page">{{ $name }}</span>
+    {{- else }}
+    <a href="{{ $p.RelPermalink }}">{{ $name }}</a>
+    {{- end }}
+  {{- end }}
+</nav>
