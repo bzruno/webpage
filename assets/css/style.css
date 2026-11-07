@@ -136,7 +136,6 @@ main {
    CARD ACCENT-LEFT (base compartilhada)
    ========================================================================== */
 .breadcrumb,
-.meta,
 .toc,
 .series-nav,
 .artigos li,
@@ -148,7 +147,6 @@ main {
   border-radius: 0 var(--r) var(--r) 0;
 }
 
-.meta,
 .toc {
   border-left-width: 4px;
 }
@@ -244,12 +242,11 @@ b {
 /* ============================================================================
    ÍCONES
    ========================================================================== */
-/* A cor chega ao traço pelo currentColor. */
+/* Do tamanho e da cor do texto ao redor: o traço usa currentColor. */
 .icon {
-  width: 1.1em;
-  height: 1.1em;
-  vertical-align: -0.2em;
-  color: var(--accent);
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
 }
 
 /* ============================================================================
@@ -442,22 +439,16 @@ main :is(ul, ol) :is(ul, ol) {
 /* ============================================================================
    META DO ARTIGO
    ========================================================================== */
+/* Dados do artigo, não destaque: uma faixa entre dois fios, no corpo do texto. */
 .meta {
-  padding: var(--s-4) var(--s-6);
-  margin: var(--s-8) 0;
-  color: var(--text-2);
-  text-align: center;
-}
-
-.meta div {
-  margin: var(--s-2) 0;
-}
-
-.meta-itens {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--s-1) var(--s-6);
+  margin: var(--s-8) 0;
+  padding: var(--s-3) 0;
+  border-block: 1px solid var(--bg-3);
+  color: var(--text-2);
 }
 
 .meta a {
@@ -941,10 +932,6 @@ math {
 
   .toc nav > ol {
     padding-left: var(--s-1);
-  }
-
-  .meta {
-    padding: var(--s-3) var(--s-4);
   }
 
   .series-nav {
