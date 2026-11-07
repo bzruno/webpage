@@ -1,43 +1,28 @@
-/* ============================================================================
-   VARIÁVEIS
-   ========================================================================== */
+/* Variáveis ---------------------------------------------------------------- */
 :root {
-  /* Fundo */
   --bg-0: #040404;
   --bg-1: #141414;
   --bg-2: #242424;
   --bg-3: #343434;
 
-  /* Bordas */
-  --border: #e9dbc7;
-
-  /* Texto */
   --text-1: #e9dbc7;
   --text-2: #ada59c;
-
-  /* Acento */
+  --border: var(--text-1);
   --accent: #fa774f;
-  --accent-rgb: 250, 119, 79;
-  --accent-muted: #e9dbc7;
-
-  /* Links */
-  --link: #f5724a;
+  --link: var(--accent);
   --link-hover: #ff9070;
 
-  /* Escala de tamanhos. Tudo sai daqui: no celular basta redefinir estas
-     variáveis. --fs-small é o texto auxiliar: meta, navegação do rodapé,
-     legendas, breadcrumb, notas e datas. */
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* Tudo sai daqui: as telas menores só redefinem estas variáveis.
+     --fs-small é o texto auxiliar: meta, legendas, breadcrumb, notas e datas. */
   --fs-h1: 2rem;
   --fs-h2: 1.35rem;
   --fs-h3: 1.2rem;
   --fs-body: 1.125rem;
   --fs-small: 0.95rem;
 
-  /* Fontes */
-  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
-
-  /* Espaço */
   --s-1: 0.25rem;
   --s-2: 0.5rem;
   --s-3: 0.75rem;
@@ -46,20 +31,12 @@
   --s-8: 2rem;
   --s-12: 3rem;
 
-  /* Raio */
   --r: 6px;
-
-  /* Sombra */
-  --shadow: rgba(0, 0, 0, 0.4);
 }
 
-/* ============================================================================
-   FONTES
-   ========================================================================== */
-
+/* Fontes ------------------------------------------------------------------- */
 /* Source Serif 4 (Adobe, licença OFL), recorte latino: variável em peso e em
-   tamanho óptico, então títulos e texto corrido recebem desenhos próprios. O
-   navegador só baixa a itálica se a página tiver texto em itálico. */
+   tamanho óptico. O navegador só baixa a itálica se a página a usar. */
 @font-face {
   font-family: "Source Serif 4";
   src: url("{{ .fontSerif }}") format("woff2");
@@ -84,13 +61,7 @@
   font-display: swap;
 }
 
-/* ============================================================================
-   RESET E BASE
-   ========================================================================== */
-html {
-  scroll-behavior: smooth;
-}
-
+/* Base --------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -99,108 +70,93 @@ html {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
+  max-width: 920px;
+  margin: var(--s-4) auto;
+  padding: 0 var(--s-6);
+  background: var(--bg-0);
+  color: var(--text-1);
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: 1.7;
   letter-spacing: 0.01em;
-  color: var(--text-1);
-  background: var(--bg-0);
-  max-width: 920px;
-  margin: var(--s-4) auto;
-  padding: 0 var(--s-6);
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: rgba(var(--accent-rgb), 0.3);
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
   color: var(--text-1);
 }
 
-/* ============================================================================
-   SKIP LINK — atalho de teclado para o conteúdo
-   ========================================================================== */
-/* Fica fora da tela até receber foco, então não aparece para quem usa mouse,
-   mas é o primeiro destino do Tab para quem navega por teclado. Não usa
-   display:none nem visibility:hidden: os dois tirariam o link da ordem de
-   foco, que é justamente o que ele precisa ocupar. */
+header {
+  padding-bottom: var(--s-4);
+}
+
+main {
+  margin: var(--s-4) 0;
+  padding: var(--s-8);
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+/* Fora da tela até receber foco. Não usa display:none nem visibility:hidden:
+   os dois tirariam o link da ordem do Tab. */
 .skip-link {
   position: absolute;
-  left: var(--s-4);
   top: -100%;
+  left: var(--s-4);
   z-index: 10;
   padding: var(--s-2) var(--s-4);
   background: var(--bg-2);
   color: var(--text-1);
   border: 1px solid var(--accent);
   border-radius: var(--r);
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
 }
 
 .skip-link:focus {
   top: var(--s-4);
 }
 
-hr {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: var(--s-8) 0;
-}
-
-/* ============================================================================
-   LAYOUT PRINCIPAL
-   ========================================================================== */
-main {
-  background: var(--bg-1);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: var(--s-8);
-  margin: var(--s-4) 0;
-}
-
-/* ============================================================================
-   CARD ACCENT-LEFT (base compartilhada)
-   ========================================================================== */
-.breadcrumb,
-.toc,
-.series-nav,
-.artigos li,
-.series li,
-.projetos li {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r) var(--r) 0;
-}
-
-.toc {
-  border-left-width: 4px;
-}
-
-/* ============================================================================
-   TIPOGRAFIA
-   ========================================================================== */
+/* Tipografia --------------------------------------------------------------- */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  line-height: 1.4;
-  color: var(--text-1);
   margin: var(--s-8) 0 var(--s-2);
-  scroll-margin-top: var(--s-4);
-  /* Distribui um título de duas linhas em linhas de largura parecida, em vez
-     de deixar a segunda com uma palavra solta. */
+  line-height: 1.4;
   text-wrap: balance;
+  scroll-margin-top: var(--s-4);
 }
 
 h1,
-h2,
+h2 {
+  border-bottom: 1px solid var(--accent);
+}
+
+h1 {
+  margin: 0 0 var(--s-12);
+  padding-bottom: var(--s-2);
+  color: var(--accent);
+  font-size: var(--fs-h1);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+h2 {
+  padding-bottom: var(--s-1);
+  font-size: var(--fs-h2);
+}
+
 h3 {
-  font-weight: 700;
+  font-size: var(--fs-h3);
 }
 
 h4,
@@ -209,44 +165,20 @@ h6 {
   font-weight: 600;
 }
 
-h1 {
-  font-size: var(--fs-h1);
-  text-align: center;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: var(--s-2);
-  margin: 0 0 var(--s-12);
-  color: var(--accent);
-  letter-spacing: -0.01em;
-}
-
-h2 {
-  font-size: var(--fs-h2);
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: var(--s-1);
-  margin-bottom: var(--s-2);
-  color: var(--accent-muted);
-}
-
-h3 {
-  font-size: var(--fs-h3);
-}
-
 h4,
 h5 {
   font-size: var(--fs-body);
 }
 
 h6 {
-  font-size: var(--fs-small);
   color: var(--text-2);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
   letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 p {
   margin-bottom: var(--s-6);
-  /* Impede a linha órfã de uma palavra só no fim do parágrafo. Navegador que
-     não conhece a propriedade simplesmente ignora e quebra como antes. */
   text-wrap: pretty;
 }
 
@@ -254,22 +186,65 @@ p:last-child {
   margin-bottom: 0;
 }
 
-strong,
-b {
-  font-weight: 700;
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
 }
 
 .subtitle {
-  text-align: center;
-  color: var(--text-2);
-  font-style: italic;
   margin-top: calc(-1 * var(--s-8));
   margin-bottom: var(--s-12);
+  color: var(--text-2);
+  font-style: italic;
+  text-align: center;
 }
 
-/* ============================================================================
-   ÍCONES
-   ========================================================================== */
+/* Texto auxiliar: um só tamanho. */
+.meta,
+.breadcrumb,
+.post-footer nav,
+.footnotes,
+.lifegrid-caption,
+.img-figure figcaption,
+.projetos-desc {
+  color: var(--text-2);
+  font-size: var(--fs-small);
+}
+
+.lifegrid-caption,
+.img-figure figcaption {
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Dados em fonte monoespaçada. */
+.skip-link,
+.artigos time,
+.series small,
+.categorias small,
+.projetos-status,
+.toc li::before {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+}
+
+.artigos time,
+.series small,
+.categorias small {
+  color: var(--text-2);
+}
+
+.artigos time,
+.projetos-status {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.series small,
+.categorias small {
+  margin-left: var(--s-2);
+}
+
 /* Do tamanho e da cor do texto ao redor: o traço usa currentColor. */
 .icon {
   width: 1em;
@@ -277,9 +252,7 @@ b {
   vertical-align: -0.125em;
 }
 
-/* ============================================================================
-   LINKS
-   ========================================================================== */
+/* Links -------------------------------------------------------------------- */
 a {
   color: var(--link);
   text-decoration: none;
@@ -297,79 +270,104 @@ a:focus-visible {
   border-radius: 2px;
 }
 
-/* ============================================================================
-   NAVEGAÇÃO PRINCIPAL
-   ========================================================================== */
-header {
-  padding-bottom: var(--s-4);
-}
-
-.main-menu {
-  display: flex;
-  justify-content: center;
-  gap: var(--s-4);
-  flex-wrap: wrap;
-}
-
-.main-menu a {
-  padding: var(--s-2) var(--s-4);
-  border-radius: var(--r);
-  color: var(--text-1);
-  transition: color 0.15s, background 0.15s;
+/* Links que só ganham a cor de acento ao passar o mouse. */
+.main-menu,
+.home-links,
+.artigos,
+.series,
+.categorias,
+.series-nav,
+.projetos-header,
+.toc {
+  --link: var(--text-1);
 }
 
 .main-menu a:hover,
-.main-menu a.active {
-  background: var(--bg-2);
+.home-links a:hover,
+.artigos a:hover,
+.series a:hover,
+.categorias a:hover,
+.series-nav a:hover,
+.projetos-header a:hover {
   text-decoration: none;
 }
 
-.main-menu a:hover {
-  color: var(--link-hover);
-}
-
-.main-menu a.active {
-  font-weight: 700;
-  border-bottom: 2px solid var(--accent);
-}
-
-/* ============================================================================
-   BREADCRUMB
-   ========================================================================== */
-.breadcrumb {
-  font-size: var(--fs-small);
-  color: var(--text-2);
-  margin-bottom: var(--s-6);
-  padding: var(--s-2) var(--s-4);
-}
-
-.breadcrumb a {
-  color: var(--link);
+.breadcrumb a,
+.breadcrumb span,
+.meta a,
+.post-footer a,
+.artigos a,
+.series a,
+.categorias a,
+.series-nav a,
+.projetos-header a,
+.home-links a {
   font-weight: 500;
 }
 
-.breadcrumb span {
-  color: var(--text-1);
-  font-weight: 500;
+/* Ritmo vertical e padrões compartilhados ----------------------------------- */
+hr,
+.meta,
+.series-nav,
+.related,
+.home-avatar,
+.lifegrid-container {
+  margin: var(--s-8) 0;
 }
 
-/* ============================================================================
-   LISTAS DE ARTIGOS E SÉRIES
-   ========================================================================== */
+pre,
+table,
+blockquote,
+.highlight,
+.math-block,
+.buttons,
+.home-links,
 .artigos,
-.series {
-  list-style: none;
-  padding: 0;
+.series,
+.categorias,
+.projetos {
   margin: var(--s-6) 0;
 }
 
-.artigos li,
-.series li {
-  padding: var(--s-4);
-  margin: var(--s-4) 0;
+.artigos,
+.series,
+.categorias,
+.projetos,
+.series-nav ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* Faixas centralizadas. */
+.main-menu,
+.home-links,
+.buttons,
+.meta,
+.lifegrid-legends {
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--s-4);
+}
+
+/* Cartão com borda de acento à esquerda. */
+.breadcrumb,
+.toc,
+.series-nav,
+.artigos li,
+.series li,
+.projetos li {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+
+.artigos li,
+.series li,
+.projetos li {
+  margin: var(--s-4) 0;
+  padding: var(--s-4);
   transition: background 0.2s;
 }
 
@@ -379,73 +377,82 @@ header {
   background: var(--bg-3);
 }
 
-.artigos a,
-.series a,
-.categorias a,
-.series-nav a {
-  font-weight: 500;
-  color: var(--text-1);
-}
-
-.artigos a:hover,
-.series a:hover,
-.categorias a:hover,
-.series-nav a:hover,
-.projetos-header a:hover {
-  color: var(--link-hover);
-  text-decoration: none;
-}
-
-.artigos time {
-  color: var(--text-2);
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* ============================================================================
-   LISTA DE CATEGORIAS
-   ========================================================================== */
-.categorias {
-  list-style: none;
-  padding: 0;
-  margin: var(--s-6) 0;
+.artigos li,
+.series li,
+.projetos-header {
   display: flex;
-  flex-wrap: wrap;
+  align-items: baseline;
   gap: var(--s-4);
 }
 
-.categorias li {
-  display: inline-flex;
-  align-items: center;
+/* Etiqueta. */
+.categorias li,
+.home-links a {
+  padding: var(--s-2) var(--s-4);
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: var(--r);
-  padding: var(--s-2) var(--s-4);
   transition: background 0.2s, border-color 0.2s;
 }
 
-.categorias li:hover {
+.categorias li:hover,
+.home-links a:hover {
   background: var(--bg-3);
   border-color: var(--accent);
 }
 
-
-.series small,
-.categorias small {
-  color: var(--text-2);
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  margin-left: var(--s-2);
+/* Separador no topo do bloco. */
+.related,
+.post-footer,
+.footnotes {
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
 }
 
-/* ============================================================================
-   LISTAS (CONTEÚDO — MARKDOWN)
-   ========================================================================== */
+.post-footer,
+.footnotes {
+  margin-top: var(--s-8);
+}
+
+/* Navegação ---------------------------------------------------------------- */
+.main-menu a {
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r);
+  transition: color 0.15s, background 0.15s;
+}
+
+.main-menu a:hover,
+.main-menu a.active {
+  background: var(--bg-2);
+}
+
+.main-menu a.active {
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+}
+
+.breadcrumb {
+  margin-bottom: var(--s-6);
+  padding: var(--s-2) var(--s-4);
+}
+
+.breadcrumb span {
+  color: var(--text-1);
+}
+
+.post-footer nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Listas do conteúdo ------------------------------------------------------- */
 main :is(ul, ol) {
   margin: var(--s-4) 0 var(--s-6);
   padding-left: 1.75em;
+}
+
+main :is(ul, ol) :is(ul, ol) {
+  margin: var(--s-2) 0;
 }
 
 main li {
@@ -453,103 +460,75 @@ main li {
   line-height: 1.6;
 }
 
-main :is(ul, ol) :is(ul, ol) {
-  margin: var(--s-2) 0;
-}
-
-/* Evitar que padding do conteúdo afete a navegação da série */
-.series-nav ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-/* ============================================================================
-   META DO ARTIGO
-   ========================================================================== */
-/* Dados do artigo, não destaque: uma faixa entre dois fios, no corpo do texto. */
-.meta {
+.categorias {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: var(--s-4);
+}
+
+.categorias li {
+  display: flex;
+  align-items: center;
+}
+
+/* Artigo ------------------------------------------------------------------- */
+/* Dados do artigo, não destaque: uma faixa entre dois fios. */
+.meta {
   gap: var(--s-1) var(--s-6);
-  margin: var(--s-8) 0;
   padding: var(--s-3) 0;
   border-block: 1px solid var(--bg-3);
-  font-size: var(--fs-small);
-  color: var(--text-2);
 }
 
-.meta a {
-  color: var(--link);
-  font-weight: 500;
-}
-
-/* ============================================================================
-   TABLE OF CONTENTS
-   ========================================================================== */
 .toc {
-  padding: var(--s-4);
   margin-bottom: var(--s-6);
+  padding: var(--s-4);
 }
 
 .toc h2 {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: var(--s-1);
   margin: 0 0 var(--s-2);
+  border-bottom-color: var(--border);
   color: var(--accent);
 }
 
 .toc ol {
-  counter-reset: toc-item;
-  list-style: none;
   margin: 0;
+  list-style: none;
+  counter-reset: toc-item;
 }
 
 .toc nav > ol {
-  padding-left: var(--s-2);
   padding-top: var(--s-2);
+  padding-left: var(--s-2);
 }
 
 .toc ol ol {
-  padding-left: var(--s-6);
   margin: var(--s-1) 0;
-}
-
-.toc li {
-  display: block;
-  margin: 0.4rem 0;
+  padding-left: var(--s-6);
 }
 
 .toc li::before {
+  margin-right: var(--s-2);
+  color: var(--accent);
   content: counters(toc-item, ".") ". ";
   counter-increment: toc-item;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  margin-right: var(--s-2);
 }
 
-.toc a {
-  color: var(--text-1);
-}
-
-.toc a:hover {
-  color: var(--link-hover);
-}
-
-/* ============================================================================
-   NAVEGAÇÃO DE SÉRIES
-   ========================================================================== */
 .series-nav {
   padding: var(--s-6);
-  margin: var(--s-8) 0;
+}
+
+.series-nav h3,
+.related h3 {
+  margin-top: 0;
+  color: var(--accent);
 }
 
 .series-nav h3 {
-  margin-top: 0;
   margin-bottom: var(--s-4);
-  color: var(--accent);
+}
+
+.series-nav ul {
+  margin: 0;
 }
 
 .series-nav li {
@@ -562,140 +541,65 @@ main :is(ul, ol) :is(ul, ol) {
 }
 
 .series-nav li.active {
+  color: var(--accent);
   font-weight: 700;
-  color: var(--accent);
-}
-
-
-/* ============================================================================
-   ARTIGOS RELACIONADOS
-   ========================================================================== */
-/* Sem fundo próprio de propósito: os <li> internos são .artigos, que já
-   recebem o cartão com a borda de acento. Um fundo aqui empilharia cartão
-   dentro de cartão. O separador no topo basta para destacar a seção. */
-.related {
-  margin: var(--s-8) 0;
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--border);
-}
-
-.related h3 {
-  margin-top: 0;
-  margin-bottom: var(--s-2);
-  color: var(--accent);
 }
 
 .related .artigos {
   margin: var(--s-2) 0 0;
 }
 
-/* ============================================================================
-   FOOTER DO POST
-   ========================================================================== */
-.post-footer {
-  margin-top: var(--s-8);
-  padding-top: var(--s-4);
-  border-top: 1px solid var(--border);
+/* O Goldmark abre as notas com um <hr>, que somaria uma segunda linha à borda. */
+.footnotes hr {
+  display: none;
 }
 
-.post-footer nav {
-  display: flex;
-  justify-content: space-between;
-  font-size: var(--fs-small);
-}
-
-.post-footer a {
-  color: var(--link);
-  font-weight: 500;
-}
-
-/* ============================================================================
-   CÓDIGO
-   ========================================================================== */
-code {
-  font-family: var(--font-mono);
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 0.1em 0.35em;
-  font-size: 0.875em;
-  color: var(--accent-muted);
-}
-
+/* Código ------------------------------------------------------------------- */
+code,
 pre {
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: var(--r);
+}
+
+code {
+  padding: 0.1em 0.35em;
+  color: var(--text-1);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+pre {
   padding: var(--s-4);
   overflow-x: auto;
-  margin: var(--s-6) 0;
   line-height: 1.5;
   tab-size: 2;
-  box-shadow: inset 0 1px 4px var(--shadow);
-}
-
-pre::-webkit-scrollbar {
-  height: 6px;
-}
-
-pre::-webkit-scrollbar-track {
-  background: var(--bg-1);
-}
-
-pre::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+  box-shadow: inset 0 1px 4px rgb(0 0 0 / 40%);
+  scrollbar-color: var(--border) var(--bg-1);
+  scrollbar-width: thin;
 }
 
 pre code {
+  padding: 0;
   background: none;
   border: none;
-  padding: 0;
-  color: var(--text-1);
 }
 
-/* ----------------------------------------------------------------------------
-   REALCE DE SINTAXE (Chroma)
-
-   As cores dos tokens vêm da folha gerada por css.ChromaStyles a partir do
-   style declarado em [markup.highlight] no hugo.toml — não são escritas aqui,
-   para não divergirem em silêncio se o style mudar.
-
-   O que este bloco faz é reencaixar o bloco realçado na paleta do site: o
-   tokyonight-night traz o próprio fundo (#1a1b26), e sem estas regras um bloco
-   com realce ficaria de um tom e um bloco sem realce de outro, lado a lado no
-   mesmo artigo.
-   -------------------------------------------------------------------------- */
+/* As cores dos tokens vêm do css.ChromaStyles; aqui o bloco só volta à paleta
+   do site, para não destoar de um bloco sem realce. */
 .chroma {
   background-color: var(--bg-2);
-}
-
-/* O Hugo envolve o código realçado num <div class="highlight">; a margem passa
-   para ele para que o <pre> interno não some duas margens verticais. */
-.highlight {
-  margin: var(--s-6) 0;
 }
 
 .highlight pre.chroma {
   margin: 0;
 }
 
-/* Números de linha não devem ser selecionáveis: copiar o bloco traria "1 2 3"
-   grudado em cada linha de código. */
-.chroma .lnt,
-.chroma .ln {
-  color: var(--text-2);
-  user-select: none;
-}
-
-/* ============================================================================
-   TABELAS
-   ========================================================================== */
+/* Tabelas ------------------------------------------------------------------ */
 table {
-  border-collapse: collapse;
   width: 100%;
-  margin: var(--s-6) 0;
   border: 1px solid var(--border);
+  border-collapse: collapse;
 }
 
 th,
@@ -707,8 +611,6 @@ td {
 
 th {
   background: var(--bg-2);
-  font-weight: 700;
-  color: var(--text-1);
   border-bottom: 2px solid var(--accent);
 }
 
@@ -716,100 +618,87 @@ tr:last-child td {
   border-bottom: none;
 }
 
-/* ============================================================================
-   BLOCKQUOTES
-   ========================================================================== */
+/* Citações ----------------------------------------------------------------- */
 blockquote {
-  border-left: 4px solid var(--accent);
+  padding: var(--s-3) var(--s-4);
   background: var(--bg-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
   color: var(--text-2);
   font-style: italic;
-  margin: var(--s-6) 0;
-  padding: var(--s-3) var(--s-4);
-  border-radius: 0 var(--r) var(--r) 0;
 }
 
-blockquote p:last-child {
-  margin-bottom: 0;
-}
-
-/* ============================================================================
-   IMAGENS
-   ========================================================================== */
+/* Imagens ------------------------------------------------------------------ */
 main img {
+  display: block;
   max-width: 100%;
   height: auto;
-  display: block;
   border-radius: var(--r);
 }
 
-figure.img-figure {
-  margin: var(--s-8) auto;
-  max-width: 400px;
+.img-figure {
   width: 100%;
+  max-width: 400px;
+  margin: var(--s-8) auto;
 }
 
-figure.img-figure img {
+.img-figure img {
   margin: 0 auto;
 }
 
-figure.img-figure figcaption {
+.img-figure figcaption {
   margin-top: var(--s-2);
-  font-size: var(--fs-small);
-  color: var(--text-2);
-  text-align: center;
   font-style: italic;
-  line-height: 1.6;
+}
+
+/* Fórmulas ----------------------------------------------------------------- */
+math {
+  font-size: 1.1em;
+}
+
+/* Rola na horizontal em tela estreita, em vez de esticar a página. */
+.math-block {
+  padding: var(--s-4) 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Home --------------------------------------------------------------------- */
+.home-avatar {
+  text-align: center;
+}
+
+.home-avatar img {
+  display: inline-block;
+  width: 100%;
+  max-width: 256px;
 }
 
 .buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   gap: var(--s-6);
-  margin: var(--s-6) 0;
 }
 
 .buttons img {
   border-radius: 0;
 }
 
-/* ============================================================================
-   FOOTNOTES
-   ========================================================================== */
-.footnotes {
-  font-size: var(--fs-small);
-  color: var(--text-2);
-  border-top: 1px solid var(--border);
-  margin-top: var(--s-8);
-  padding-top: var(--s-4);
-}
-
-/* O Goldmark abre as notas com um <hr>, que somaria uma segunda linha à borda. */
-.footnotes hr {
-  display: none;
-}
-
-/* ============================================================================
-   FOOTER DO SITE
-   ========================================================================== */
-.site-footer {
+.home-links a {
+  min-width: 8rem;
   text-align: center;
+}
+
+.site-footer {
   margin-top: var(--s-12);
   color: var(--text-2);
+  text-align: center;
 }
 
 .site-footer img {
   vertical-align: middle;
 }
 
-/* ============================================================================
-   LIFEGRID
-   ========================================================================== */
+/* Lifegrid ----------------------------------------------------------------- */
 .lifegrid-container {
-  max-width: 100%;
-  margin: var(--s-8) auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -818,31 +707,18 @@ figure.img-figure figcaption {
 #lifeGrid {
   max-width: 100%;
   border-radius: var(--r);
-  display: block;
 }
 
 .lifegrid-caption {
-  font-size: var(--fs-small);
   margin-top: var(--s-4);
-  line-height: 1.6;
-  color: var(--text-2);
-  text-align: center;
   padding-top: var(--s-4);
   border-top: 1px solid var(--border);
 }
 
-.lifegrid-stats {
-  margin-bottom: var(--s-2);
-}
-
 .lifegrid-legends {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--s-4);
+  margin-top: var(--s-2);
   padding-top: var(--s-2);
   border-top: 1px solid var(--border);
-  margin-top: var(--s-2);
 }
 
 .legend-item {
@@ -852,42 +728,22 @@ figure.img-figure figcaption {
 }
 
 .legend-color {
+  flex-shrink: 0;
   width: 10px;
   height: 10px;
   border-radius: var(--r);
-  display: inline-block;
-  flex-shrink: 0;
 }
 
-/* ============================================================================
-   MATEMÁTICA — MathML gerado em tempo de build
-
-   As fórmulas não vêm mais do KaTeX no navegador: o render hook
-   layouts/_markup/render-passthrough.html as converte em MathML durante o
-   build. O MathML é renderizado pelo próprio navegador, então aqui só há
-   ajuste de tamanho, cor e rolagem — nenhuma folha de estilo externa.
-
-   O seletor é o próprio elemento <math>, não uma classe: o MathML é marcação
-   nativa. O transform.ToMath ainda envolve a saída num <span class="katex">
-   herdado da biblioteca, mas esse span não precisa de estilo nenhum aqui.
-   ========================================================================== */
-math {
-  font-size: 1.1em;
+/* Projetos ----------------------------------------------------------------- */
+.projetos-status {
   color: var(--text-1);
 }
 
-/* Fórmula de bloco: rola na horizontal em tela estreita em vez de esticar o
-   artigo e criar rolagem horizontal na página inteira. */
-.math-block {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: var(--s-4) 0;
-  margin: var(--s-6) 0;
+.projetos-desc {
+  margin: var(--s-2) 0 0;
 }
 
-/* ============================================================================
-   RESPONSIVIDADE
-   ========================================================================== */
+/* Telas menores ------------------------------------------------------------ */
 @media (max-width: 768px) {
   :root {
     --fs-h1: 1.6rem;
@@ -901,7 +757,8 @@ math {
     padding: 0 var(--s-4);
   }
 
-  main {
+  main,
+  .series-nav {
     padding: var(--s-4);
   }
 
@@ -932,8 +789,8 @@ math {
   }
 
   .categorias li {
-    width: 100%;
     justify-content: center;
+    width: 100%;
   }
 
   table {
@@ -942,16 +799,12 @@ math {
   }
 
   .toc {
-    padding: var(--s-3);
     margin: var(--s-4) 0;
+    padding: var(--s-3);
   }
 
   .toc nav > ol {
     padding-left: var(--s-1);
-  }
-
-  .series-nav {
-    padding: var(--s-4);
   }
 }
 
@@ -961,94 +814,7 @@ math {
   }
 }
 
-/* ============================================================================
-   HOMEPAGE
-   ========================================================================== */
-.home-avatar {
-  text-align: center;
-  margin: var(--s-8) 0;
-}
-
-.home-avatar img {
-  display: inline-block;
-  max-width: 256px;
-  width: 100%;
-  height: auto;
-  border-radius: var(--r);
-}
-
-.home-links {
-  display: flex;
-  justify-content: center;
-  gap: var(--s-4);
-  flex-wrap: wrap;
-  margin: var(--s-6) 0;
-}
-
-.home-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 8rem;
-  padding: var(--s-2) var(--s-4);
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  color: var(--text-1);
-  font-weight: 500;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.home-links a:hover {
-  background: var(--bg-3);
-  border-color: var(--accent);
-  color: var(--link-hover);
-  text-decoration: none;
-}
-
-/* ============================================================================
-   LISTA DE PROJETOS
-   ========================================================================== */
-.projetos {
-  list-style: none;
-  padding: 0;
-  margin: var(--s-6) 0;
-}
-
-.projetos li {
-  padding: var(--s-4);
-  margin: var(--s-4) 0;
-  transition: background 0.2s;
-}
-
-.projetos-header {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-4);
-}
-
-.projetos-header a {
-  font-weight: 600;
-  color: var(--text-1);
-}
-
-.projetos-status {
-  color: var(--border);
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.projetos-desc {
-  color: var(--text-2);
-  font-size: var(--fs-small);
-  margin: var(--s-2) 0 0;
-}
-
-/* ============================================================================
-   ACESSIBILIDADE — MOVIMENTO REDUZIDO
-   ========================================================================== */
+/* Menos movimento ---------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

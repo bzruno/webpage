@@ -33,7 +33,7 @@
 <div class="lifegrid-container">
   <canvas id="lifeGrid" role="img" aria-label="Grade da vida em semanas: {{ $livedWeeks }} vividas de {{ $totalWeeks }}.">Seu navegador não suporta canvas. Atualize-o para visualizar a grade de vida.</canvas>
   <div class="lifegrid-caption">
-    <div class="lifegrid-stats">
+    <div>
       Idade: {{ printf "%.1f" $idadeAnos }} anos |
       Semanas vividas: {{ $livedWeeks }} |
       Semanas restantes: {{ sub $totalWeeks $livedWeeks }}<br>
