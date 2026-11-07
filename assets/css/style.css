@@ -25,7 +25,7 @@
   --link-hover: #ff9070;
 
   /* Fontes */
-  --font-body: Georgia, "Times New Roman", serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* Espaço */
@@ -48,9 +48,28 @@
    FONTES
    ========================================================================== */
 
+/* Source Serif 4 (Adobe, licença OFL), recorte latino: variável em peso e em
+   tamanho óptico, então títulos e texto corrido recebem desenhos próprios. O
+   navegador só baixa a itálica se a página tiver texto em itálico. */
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("{{ .fontSerif }}") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("{{ .fontSerifItalic }}") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "JetBrains Mono Variable";
-  src: url("{{ .fontURL }}") format("woff2");
+  src: url("{{ .fontMono }}") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

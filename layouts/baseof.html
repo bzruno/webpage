@@ -22,9 +22,12 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#040404">
 
-  {{/* Fonte via asset pipeline: com fingerprint para cache busting imutável */}}
-  {{- $font := resources.Get "fonts/JetBrainsMono-Regular.woff2" | fingerprint }}
-  <link rel="preload" href="{{ $font.RelPermalink }}" as="font" type="font/woff2" crossorigin>
+  {{/* Fontes via asset pipeline: com fingerprint para cache busting imutável.
+       Só a do texto corrido tem preload: é a que toda página usa logo de início. */}}
+  {{- $mono := resources.Get "fonts/JetBrainsMono-Regular.woff2" | fingerprint }}
+  {{- $serif := resources.Get "fonts/SourceSerif4-Variable.woff2" | fingerprint }}
+  {{- $serifItalic := resources.Get "fonts/SourceSerif4-Italic-Variable.woff2" | fingerprint }}
+  <link rel="preload" href="{{ $serif.RelPermalink }}" as="font" type="font/woff2" crossorigin>
 
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
@@ -61,12 +64,15 @@
     style.css (que reencaixam o bloco de código na paleta do site) venham
     depois e vençam, sem precisar de !important.
 
-    style.css é executado como template para receber a URL da fonte já com
+    style.css é executado como template para receber as URLs das fontes já com
     fingerprint.
   */}}
   {{- $chroma := css.ChromaStyles (dict "targetPath" "css/chroma.css" "omitClassComments" true) }}
   {{- $style := resources.Get "css/style.css"
-      | resources.ExecuteAsTemplate "css/style.css" (dict "fontURL" $font.RelPermalink) }}
+      | resources.ExecuteAsTemplate "css/style.css" (dict
+          "fontMono" $mono.RelPermalink
+          "fontSerif" $serif.RelPermalink
+          "fontSerifItalic" $serifItalic.RelPermalink) }}
   {{ with slice $chroma $style | resources.Concat "css/bundle.css" | minify | fingerprint -}}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{- end }}
