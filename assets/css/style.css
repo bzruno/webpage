@@ -223,6 +223,7 @@ hr {
 .series small,
 .categorias small,
 .projetos-status,
+.lifegrid-caption,
 .toc li::before {
   font-family: var(--font-mono);
   font-size: var(--fs-small);
@@ -245,10 +246,11 @@ hr {
   margin-left: var(--s-2);
 }
 
-/* Do tamanho e da cor do texto ao redor: o traço usa currentColor. */
+/* Do tamanho do texto ao redor e na cor do h1. */
 .icon {
   width: 1em;
   height: 1em;
+  color: var(--accent);
   vertical-align: -0.125em;
 }
 
@@ -342,7 +344,7 @@ blockquote,
 .main-menu,
 .home-links,
 .buttons,
-.meta,
+.meta > div,
 .lifegrid-legends {
   display: flex;
   flex-wrap: wrap;
@@ -474,9 +476,14 @@ main li {
 /* Artigo ------------------------------------------------------------------- */
 /* Dados do artigo, não destaque: uma faixa entre dois fios. */
 .meta {
-  gap: var(--s-1) var(--s-6);
+  display: grid;
+  gap: var(--s-1);
   padding: var(--s-3) 0;
   border-block: 1px solid var(--bg-3);
+}
+
+.meta > div {
+  gap: var(--s-1) var(--s-6);
 }
 
 .toc {

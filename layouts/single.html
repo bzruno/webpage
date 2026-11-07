@@ -7,38 +7,45 @@
     <h1>{{ .Title }}</h1>
     {{- with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{- end }}
     <div class="meta">
-      <span>{{ partial "icon.html" "calendario" }} {{ partial "date.html" .Date }}</span>
-      {{/* .ReadingTime é calculado pelo Hugo a partir da contagem de
-           palavras do conteúdo já renderizado; nunca fica desatualizado
-           como ficaria um número escrito no front matter. Sai só em
-           artigos, onde a estimativa tem serventia. */}}
-      {{- if eq .Section "blog" }}
-      <span>{{ partial "icon.html" "relogio" }} {{ .ReadingTime }} min de leitura</span>
-      {{- end }}
-      {{/* Sem lastmod no front matter, o Hugo devolve a própria .Date. A
-           comparação é por dia: ajuste no dia da publicação não é edição. */}}
-      {{- if gt (.Lastmod | time.Format "2006-01-02") (.Date | time.Format "2006-01-02") }}
-      <span>{{ partial "icon.html" "lapis" }} Última edição em: {{ partial "date.html" .Lastmod }}</span>
-      {{- end }}
-
-      {{- with .GetTerms "categorias" }}
-      <span>
-        Categorias:
-        {{- range $i, $term := . }}
-          {{- if $i }}, {{ end }}
-          {{ with $term.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
+      <div>
+        <span>{{ partial "icon.html" "calendario" }} Publicado: {{ partial "date.html" .Date }}</span>
+        {{/* Sem lastmod no front matter, o Hugo devolve a própria .Date. A
+             comparação é por dia: ajuste no dia da publicação não é edição. */}}
+        {{- if gt (.Lastmod | time.Format "2006-01-02") (.Date | time.Format "2006-01-02") }}
+        <span>{{ partial "icon.html" "lapis" }} Atualizado: {{ partial "date.html" .Lastmod }}</span>
         {{- end }}
-      </span>
-      {{- end }}
-
-      {{- with .GetTerms "series" }}
-      <span>
-        Série:
-        {{- range $i, $term := . }}
-          {{- if $i }}, {{ end }}
-          <a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>{{ with $.Params.part }} (Parte {{ . }}){{ end }}
+        {{/* .ReadingTime é calculado pelo Hugo a partir da contagem de
+             palavras do conteúdo já renderizado; nunca fica desatualizado
+             como ficaria um número escrito no front matter. Sai só em
+             artigos, onde a estimativa tem serventia. */}}
+        {{- if eq .Section "blog" }}
+        <span>{{ partial "icon.html" "relogio" }} {{ .ReadingTime }} min de leitura</span>
         {{- end }}
-      </span>
+      </div>
+
+      {{- $categorias := .GetTerms "categorias" }}
+      {{- $series := .GetTerms "series" }}
+      {{- if or $categorias $series }}
+      <div>
+        {{- with $categorias }}
+        <span>
+          Categorias:
+          {{- range $i, $term := . }}
+            {{- if $i }}, {{ end }}
+            {{ with $term.Params.emoji }}{{ . }}&nbsp;{{ end }}<a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>
+          {{- end }}
+        </span>
+        {{- end }}
+        {{- with $series }}
+        <span>
+          Série:
+          {{- range $i, $term := . }}
+            {{- if $i }}, {{ end }}
+            <a href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>{{ with $.Params.part }} (Parte {{ . }}){{ end }}
+          {{- end }}
+        </span>
+        {{- end }}
+      </div>
       {{- end }}
     </div>
   </header>
