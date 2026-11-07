@@ -1,0 +1,20 @@
+{{/*
+  Ícone SVG em linha. Uso: {{ partial "icon.html" "relogio" }}
+
+  Em linha, e não como arquivo, para herdar a cor pelo currentColor: quem define
+  a cor é a classe .icon no style.css, junto com a paleta do site. Um nome que não
+  existe aqui interrompe o build, em vez de sair um buraco na página.
+
+  aria-hidden: o ícone só enfeita o texto ao lado dele.
+*/}}
+{{- $icones := dict
+  "calendario" `<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>`
+  "relogio"    `<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>`
+  "lapis"      `<path d="M4 20l1-4.5L16 4.5a2.1 2.1 0 0 1 3 0l.5.5a2.1 2.1 0 0 1 0 3L8.5 19z"/><path d="M14 6.5l3.5 3.5"/>`
+  "sumario"    `<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>`
+-}}
+{{- with index $icones . -}}
+<svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ . | safeHTML }}</svg>
+{{- else -}}
+{{- errorf "icon.html: ícone desconhecido %q" . -}}
+{{- end -}}

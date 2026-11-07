@@ -242,6 +242,17 @@ b {
 }
 
 /* ============================================================================
+   ÍCONES
+   ========================================================================== */
+/* A cor chega ao traço pelo currentColor. */
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.2em;
+  color: var(--accent);
+}
+
+/* ============================================================================
    LINKS
    ========================================================================== */
 a {
@@ -440,6 +451,13 @@ main :is(ul, ol) :is(ul, ol) {
 
 .meta div {
   margin: var(--s-2) 0;
+}
+
+.meta-itens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-1) var(--s-6);
 }
 
 .meta a {

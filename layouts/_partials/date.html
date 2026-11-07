@@ -1,5 +1,6 @@
 {{/*
-  Data no formato compacto DD-Mmm-AAAA (ex.: 01-Mai-2025).
+  Data no formato compacto DD-Mmm-AAAA (ex.: 01-Mai-2025). Recebe a data, não a
+  página: .Date na publicação, .Lastmod na última edição.
 
   Os nomes dos meses vêm do próprio Hugo via time.Format, que respeita o
   locale = 'pt-BR' definido no hugo.toml — não há mais uma lista de meses
@@ -11,7 +12,7 @@
   Atenção: replace recebe (INPUT OLD NEW), por isso a chamada não é encadeada
   com pipe — o pipe empurraria o valor para o último argumento.
 */}}
-{{- if not .Date.IsZero -}}
-{{- $mes := strings.FirstUpper (replace (.Date | time.Format "Jan") "." "") -}}
-<time datetime="{{ .Date | time.Format "2006-01-02" }}">{{ .Date | time.Format "02" }}-{{ $mes }}-{{ .Date | time.Format "2006" }}</time>
+{{- if not .IsZero -}}
+{{- $mes := strings.FirstUpper (replace (. | time.Format "Jan") "." "") -}}
+<time datetime="{{ . | time.Format "2006-01-02" }}">{{ . | time.Format "02" }}-{{ $mes }}-{{ . | time.Format "2006" }}</time>
 {{- end -}}

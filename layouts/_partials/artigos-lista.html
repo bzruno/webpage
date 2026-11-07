@@ -2,7 +2,7 @@
 <ul class="artigos">
   {{- range . }}
   <li>
-    {{- partial "date.html" . }}
+    {{- partial "date.html" .Date }}
     <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
   </li>
   {{- else }}

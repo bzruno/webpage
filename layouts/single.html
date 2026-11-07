@@ -7,15 +7,19 @@
     <h1>{{ .Title }}</h1>
     {{- with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{- end }}
     <div class="meta">
-      <div>
-        📅
-        {{ partial "date.html" . }}
+      <div class="meta-itens">
+        <span>{{ partial "icon.html" "calendario" }} {{ partial "date.html" .Date }}</span>
         {{/* .ReadingTime é calculado pelo Hugo a partir da contagem de
              palavras do conteúdo já renderizado; nunca fica desatualizado
              como ficaria um número escrito no front matter. Sai só em
              artigos, onde a estimativa tem serventia. */}}
         {{- if eq .Section "blog" }}
-          · ⏱️ {{ .ReadingTime }} min de leitura
+        <span>{{ partial "icon.html" "relogio" }} {{ .ReadingTime }} min de leitura</span>
+        {{- end }}
+        {{/* Sem lastmod no front matter, o Hugo devolve a própria .Date. A
+             comparação é por dia: ajuste no dia da publicação não é edição. */}}
+        {{- if gt (.Lastmod | time.Format "2006-01-02") (.Date | time.Format "2006-01-02") }}
+        <span>{{ partial "icon.html" "lapis" }} Última edição em: {{ partial "date.html" .Lastmod }}</span>
         {{- end }}
       </div>
 
@@ -43,7 +47,7 @@
 
   {{- if and .Params.toc .Fragments.HeadingsMap }}
     <aside class="toc">
-      <h2>📑 Sumário</h2>
+      <h2>{{ partial "icon.html" "sumario" }} Sumário</h2>
       {{ .TableOfContents }}
     </aside>
   {{- end }}
